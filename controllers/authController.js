@@ -103,4 +103,14 @@ export const loginController = async (req,res) =>{
             error,
         });
     }
+}; 
+
+//test controller
+export const testController = (req, res) =>{
+    try {
+        res.send("Protected route");
+    } catch (error) {
+        console.log(error);
+        res.send({error});
+    }
 };
