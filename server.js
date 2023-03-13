@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
-import cors from 'cors';
+import cors from "cors";
 //confegure the env
 dotenv.config();
 
@@ -23,7 +23,6 @@ app.use(morgan("dev"));
 app.use("/api/v1/auth", authRoutes);
 
 //rest api
-
 app.get("/", (req, res) => {
     res.send("<h1>welcome to donation application</h1>",
 );

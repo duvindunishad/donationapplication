@@ -9,19 +9,19 @@ export const registerController = async (req, res) =>{
         const {name,email,password,phone,address} = req.body;
         // validatron part
         if(!name){
-            return res.send({error:"Name is require"});
+            return res.send({message:"Name is require"});
         }
         if(!email){
-            return res.send({error:"Email is require"});
+            return res.send({message:"Email is require"});
         }
         if(!password){
-            return res.send({error:"Password is require"});
+            return res.send({message:"Password is require"});
         }
         if(!phone){
-            return res.send({error:"Phone number is require"});
+            return res.send({message:"Phone number is require"});
         }
         if(!address){
-            return res.send({error:"Address is require"});
+            return res.send({message:"Address is require"});
         }
         
         //check the exsisting users
