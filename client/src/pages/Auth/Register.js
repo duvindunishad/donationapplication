@@ -3,7 +3,7 @@ import Layout from "./../../components/layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 //import toast from "react-hot-toast";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 //import "../../styles/AuthStyles.css";
 //import { Toast } from "react-toastify/dist/components";
@@ -22,31 +22,30 @@ const Register = () => {
     // console.log(name,email,password,address,phone);
     toast.success("Register success");
     try {
-      const res = await axios.post('/api/v1/auth/register', {
+      const res = await axios.post("/api/v1/auth/register", {
         name,
         email,
         password,
         phone,
         address,
         answer,
-       }
-       );
-     if (res && res.data.success) {
-       toast.success(res.data && res.data.message);
-       navigate("/login"); 
-       toast.success("Register success");
-     } else {
-       toast.error(res.data.message);
-     }
+      });
+      if (res && res.data.success) {
+        toast.success(res.data && res.data.message);
+        navigate("/login");
+        toast.success("Register success");
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
-     console.log(error);
-     toast.error("Something went wrong");
+      console.log(error);
+      toast.error("Something went wrong");
     }
   };
 
   return (
     <Layout title="Register -Donation application ">
-      <div className="form-container" >
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">

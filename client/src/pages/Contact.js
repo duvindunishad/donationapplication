@@ -15,7 +15,8 @@ const Contact = () => {
         <div className="col-md-4">
           <h1 className="bg-dark p-2 text-white text-center">CONTACT US</h1>
           <p className="text-justify mt-2">
-          If you have any questions or concerns about our platform, please get in touch with us using the information below:
+            If you have any questions or concerns about our platform, please get
+            in touch with us using the information below:
           </p>
           <p className="mt-3">
             <BiMailSend /> : www.donation.com
@@ -24,9 +25,11 @@ const Contact = () => {
             <BiPhoneCall /> : 094-1252434
           </p>
           <p className="text-justify mt-2">
-          We are available to assist you Monday through Friday from 9:00 AM to 5:00 PM. 
-          Thank you for using our platform to support charitable causes. We appreciate your feedback and will respond to your inquiries as soon as possible. </p>
-         
+            We are available to assist you Monday through Friday from 9:00 AM to
+            5:00 PM. Thank you for using our platform to support charitable
+            causes. We appreciate your feedback and will respond to your
+            inquiries as soon as possible.{" "}
+          </p>
         </div>
       </div>
     </Layout>

@@ -13,11 +13,23 @@ const Policy = () => {
           />
         </div>
         <div className="col-md-4">
-        <h1 className="bg-dark p-2 text-white text-center">Privacy Policy</h1>
-          <p>Our web-based charity and donation application is committed to protecting the privacy of our users. This privacy policy explains how we collect, use, and share personal information and how we protect it. By using our platform, you agree to this policy.</p>
-          <p><b>Collection of personal data</b>:</p>
-          <p>We collect personal data such as name, email address, postal address, and telephone number when you register as a user and when you make a donation. We may also collect additional information such as demographics, preferences, and interests to improve our services and user experience.
-        </p>
+          <h1 className="bg-dark p-2 text-white text-center">Privacy Policy</h1>
+          <p>
+            Our web-based charity and donation application is committed to
+            protecting the privacy of our users. This privacy policy explains
+            how we collect, use, and share personal information and how we
+            protect it. By using our platform, you agree to this policy.
+          </p>
+          <p>
+            <b>Collection of personal data</b>:
+          </p>
+          <p>
+            We collect personal data such as name, email address, postal
+            address, and telephone number when you register as a user and when
+            you make a donation. We may also collect additional information such
+            as demographics, preferences, and interests to improve our services
+            and user experience.
+          </p>
         </div>
       </div>
     </Layout>

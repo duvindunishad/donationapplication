@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext,children, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  children,
+  createContext,
+} from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -9,10 +15,10 @@ const AuthProvider = ({ children }) => {
   });
 
   //axios
-  axios.defaults.headers.common["Authorization"]=auth?.token;
+  axios.defaults.headers.common["Authorization"] = auth?.token;
 
-//this line use for save data without deleting when the page refresh
-useEffect(() => {
+  //this line use for save data without deleting when the page refresh
+  useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
       const parseData = JSON.parse(data);
@@ -32,8 +38,7 @@ useEffect(() => {
   );
 };
 
-
 //coustom hook
 const useAuth = () => useContext(AuthContext);
 
-export {useAuth, AuthProvider};
+export { useAuth, AuthProvider };

@@ -24,9 +24,7 @@ app.use("/api/v1/auth", authRoutes);
 
 //rest api
 app.get("/", (req, res) => {
-    res.send("<h1>welcome to donation application</h1>",
-);
-
+  res.send("<h1>welcome to donation application</h1>");
 });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
@@ -34,6 +32,8 @@ const port = process.env.port || 8080;
 
 //run list
 
-app.listen(port, () =>{
-    console.log(`server run on ${process.env.DEV_MODE} mode on port ${port}`.bgCyan.white);
+app.listen(port, () => {
+  console.log(
+    `server run on ${process.env.DEV_MODE} mode on port ${port}`.bgCyan.white
+  );
 });
