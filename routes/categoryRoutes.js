@@ -35,6 +35,6 @@ router.get("/get-category", categoryController);
 router.get("/single-category/:slug", singleCategoryController); //replace slug as id
 
 //delete category routes
-router.delete("/delete-category/:id", deleteCategoryCOntroller); //replace slug as id
+router.delete("/delete-category/:id", deleteCategoryCOntroller);
 
 export default router;
