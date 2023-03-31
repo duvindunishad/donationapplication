@@ -11,7 +11,7 @@ import slugify from "slugify";
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, expireDate, category, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
 
@@ -21,8 +21,8 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Name is Required" });
       case !description:
         return res.status(500).send({ error: "Description is Required" });
-      case !price:
-        return res.status(500).send({ error: "Price is Required" });
+      case !expireDate:
+        return res.status(500).send({ error: "expireDate is Required" });
       case !category:
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
@@ -138,7 +138,7 @@ export const deleteProductController = async (req, res) => {
 //update product
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, expireDate, category, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
 
@@ -148,8 +148,8 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Name is Required" });
       case !description:
         return res.status(500).send({ error: "Description is Required" });
-      case !price:
-        return res.status(500).send({ error: "Price is Required" });
+      case !expireDate:
+        return res.status(500).send({ error: "expireDate is Required" });
       case !category:
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:

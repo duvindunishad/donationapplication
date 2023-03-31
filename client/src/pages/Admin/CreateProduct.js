@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import AdminMenu from "../../components/layout/AdminMenu";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Select } from "antd";
+import { message, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
@@ -12,7 +12,7 @@ const CreateProduct = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [expireDate, setExpireDate] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
@@ -42,7 +42,7 @@ const CreateProduct = () => {
       const productData = new FormData();
       productData.append("name", name);
       productData.append("description", description);
-      productData.append("price", price);
+      productData.append("expireDate", expireDate);
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
@@ -53,11 +53,13 @@ const CreateProduct = () => {
       if (data?.success) {
         toast.error(data?.message);
       } else {
-        toast.success("Product Created Successfully");
+        message.success(" product created successfully");
+        //toast.success("Product Created Successfully");
         navigate("/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);
+      //message.error("something went wrong");
       toast.error("something went wrong");
     }
   };
@@ -133,11 +135,11 @@ const CreateProduct = () => {
 
               <div className="mb-3">
                 <input
-                  type="number"
-                  value={price}
-                  placeholder="write a Price"
+                  type="date"
+                  value={expireDate}
+                  placeholder="write a expireDate"
                   className="form-control"
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) => setExpireDate(e.target.value)}
                 />
               </div>
               <div className="mb-3">

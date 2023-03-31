@@ -21,6 +21,10 @@ import Users from "./pages/Admin/Users";
 import Orders from "./pages/user/Orders";
 import Profile from "./pages/user/Profile";
 import CreateProducts from "./pages/user/CreateProducts";
+import Products from "./pages/Admin/Products";
+import Product from "./pages/user/Product";
+import UpdateUserProduct from "./pages/user/UpdateUserProduct";
+import UpdateProduct from "./pages/Admin/UpdateProduct";
 
 function App() {
   return (
@@ -33,24 +37,19 @@ function App() {
           <Route path="user" element={<Dashboard></Dashboard>} />
           <Route path="user/orders" element={<Orders></Orders>} />
           <Route path="user/profile" element={<Profile></Profile>} />
-          <Route
-            path="user/create-product"
-            element={<CreateProducts></CreateProducts>}
-          />
+          <Route path="user/create-product" element={<CreateProducts />} />
+          <Route path="user/product/:slug" element={<UpdateUserProduct />} />
+          <Route path="user/product" element={<Product />} />
         </Route>
 
         {/* admin */}
 
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard></AdminDashboard>} />
-          <Route
-            path="admin/create-category"
-            element={<CreateCategory></CreateCategory>}
-          />
-          <Route
-            path="admin/create-product"
-            element={<CreateProduct></CreateProduct>}
-          />
+          <Route path="admin/create-category" element={<CreateCategory />} />
+          <Route path="admin/create-product" element={<CreateProduct />} />
+          <Route path="admin/product/:slug" element={<UpdateProduct />} />
+          <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users></Users>} />
         </Route>
 

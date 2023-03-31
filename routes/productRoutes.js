@@ -14,11 +14,11 @@ const router = express.Router();
 
 //routes
 
-//below can chane the create product path in user dash board or admin dashboard
+//below can change the create product path in user dash board or admin dashboard
 router.post(
   "/create-product",
   requireSignIn,
-  isAdmin,
+  //isAdmin,
   formidable(),
   createProductController
 );
@@ -26,7 +26,7 @@ router.post(
 router.put(
   "/update-product/:pid",
   requireSignIn,
-  isAdmin,
+  //  isAdmin,
   formidable(),
   updateProductController
 );
