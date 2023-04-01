@@ -3,7 +3,7 @@ import Layout from "./../../components/layout/Layout";
 import AdminMenu from "./../../components/layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Select } from "antd";
+import { message, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 const { Option } = Select;
 
@@ -99,6 +99,7 @@ const UpdateProduct = () => {
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
+      message.error("Something went wrong");
     }
   };
   return (
