@@ -228,7 +228,7 @@ export const productCountController = async (req, res) => {
 // product list base on page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 6;
+    const perPage = 3; //here can change the item count on home page
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
@@ -250,11 +250,11 @@ export const productListController = async (req, res) => {
   }
 };
 
-// search product
+// search product. here keywords based on product name and description
 export const searchProductController = async (req, res) => {
   try {
     const { keyword } = req.params;
-    const resutls = await productModel
+    const results = await productModel
       .find({
         $or: [
           { name: { $regex: keyword, $options: "i" } },
@@ -262,7 +262,7 @@ export const searchProductController = async (req, res) => {
         ],
       })
       .select("-photo");
-    res.json(resutls);
+    res.json(results);
   } catch (error) {
     console.log(error);
     res.status(400).send({
@@ -276,7 +276,7 @@ export const searchProductController = async (req, res) => {
 // similar products
 export const realtedProductController = async (req, res) => {
   try {
-    const { pid, cid } = req.params;
+    const { pid, cid } = req.params; //PID - product id , CID - category id
     const products = await productModel
       .find({
         category: cid,
@@ -293,7 +293,7 @@ export const realtedProductController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "error while geting related product",
+      message: "error while getting related product",
       error,
     });
   }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import "../styles/Homepage.css";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { Button } from "antd";
@@ -8,6 +10,7 @@ import { ExpireDate } from "../components/expireDate";
 import { json } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -159,7 +162,12 @@ const HomePage = () => {
                   <p className="card-text">
                     <b>Available : {p.quantity}</b>{" "}
                   </p>
-                  <Button class="btn btn-primary ms-3">more details</Button>
+                  <Button
+                    class="btn btn-primary ms-3"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    more details
+                  </Button>
                   <Button class="btn btn-secondary ms-5">save</Button>
                 </div>
               </div>
