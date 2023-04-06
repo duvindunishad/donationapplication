@@ -8,9 +8,12 @@ import { Button } from "antd";
 import { Checkbox, Radio } from "antd";
 import { ExpireDate } from "../components/expireDate";
 import { json } from "react-router-dom";
+import { useSave } from "../context/save";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [save, setSave] = useSave();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -162,13 +165,24 @@ const HomePage = () => {
                   <p className="card-text">
                     <b>Available : {p.quantity}</b>{" "}
                   </p>
-                  <Button
-                    class="btn btn-primary ms-3"
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                  >
-                    more details
-                  </Button>
-                  <Button class="btn btn-secondary ms-5">save</Button>
+
+                  <div className="card-name-expireDate">
+                    <button
+                      class="btn btn-primary ms-3"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      more details
+                    </button>
+                    <button
+                      class="btn btn-secondary ms-5"
+                      onClick={() => {
+                        setSave([...save, p]);
+                        toast.success("Item saved successfully");
+                      }}
+                    >
+                      save
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

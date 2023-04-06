@@ -28,6 +28,8 @@ import UpdateProduct from "./pages/Admin/UpdateProduct";
 import Search from "./pages/Search";
 import ProductDetails from "./pages/ProductDetails";
 import Categories from "./pages/Categories";
+import CategoryProduct from "./pages/CategoryProduct";
+import SavePage from "./pages/SavePage";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/" element={<HomePage></HomePage>}></Route>
         <Route path="/product/:slug" element={<ProductDetails />}></Route>
         <Route path="/categories" element={<Categories />}></Route>
+        <Route path="/save" element={<SavePage />}></Route>
+        <Route path="/category/:slug" element={<CategoryProduct />}></Route>
         <Route path="/Search" element={<Search></Search>}></Route>
 
         {/* user */}

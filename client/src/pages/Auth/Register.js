@@ -19,7 +19,7 @@ const Register = () => {
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(name,email,password,address,phone);
+    // console.log(name, email, password, address, phone);
     toast.success("Register success");
     try {
       const res = await axios.post("/api/v1/auth/register", {

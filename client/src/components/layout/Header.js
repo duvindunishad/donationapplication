@@ -6,9 +6,12 @@ import { useAuth } from "../../context/auth";
 import { toast } from "react-toastify";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
+import { useSave } from "../../context/save";
+import { Badge } from "antd";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [save] = useSave();
   const categories = useCategory();
   const handleLogout = () => {
     setAuth({
@@ -124,10 +127,13 @@ const Header = () => {
                   </div>
                 </>
               )}
+              {/* here add the save count notification */}
               <li className="nav-item">
-                <NavLink to="/save" className="nav-link">
-                  Save (0)
-                </NavLink>
+                <Badge count={save?.length} showZero>
+                  <NavLink to="/save" className="nav-link">
+                    Save
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>
