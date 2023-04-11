@@ -1,16 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { useSave } from "../context/save";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
+
+// import { request } from "express";
+import { message } from "antd";
+import Orders from "./user/Orders";
 
 const SavePage = () => {
   const [auth, setAuth] = useAuth();
   const [save, setSave] = useSave();
-  //   const [clientToken, setClientToken] = useState("");
-  //   const [instance, setInstance] = useState("");
-  //   const [loading, setLoading] = useState(false);
+  const [requesting, setRequesting] = useState(false);
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const createOrder = async (items) => {
+    try {
+      const response = await axios.post("/api/orders", { items });
+      return response.data.order;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to create order.");
+    }
+  };
+
+  //   const requestDonation = async () => {
+  //     try {
+  //       setRequesting(true);
+  //       // make donation request here
+  //       localStorage.removeItem("Save");
+  //       setSave([]);
+  //       message.success("Request successful.");
+  //       navigate("/dashboard/user/orders");
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setRequesting(false);
+  //     }
+  //   };
+
+  const requestDonation = async () => {
+    try {
+      setRequesting(true);
+
+      // make donation request here
+      const items = save.map((item) => ({ id: item._id, name: item.name }));
+      localStorage.removeItem("Save");
+      setSave([]);
+
+      message.success("Request successful.");
+      navigate("/dashboard/user/orders", { state: { items } }); // pass items as a prop to the order page
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRequesting(false);
+    }
+  };
 
   //delete item
   const removeSaveItem = (pid) => {
@@ -22,6 +73,39 @@ const SavePage = () => {
       localStorage.setItem("Save", JSON.stringify(mySave));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  //get payment/ Request gateway token
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/product/braintree/token");
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  //handle Requests
+  const handleRequest = async () => {
+    try {
+      setLoading(true);
+      //const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post("/api/v1/product/braintree/request", {
+        // nonce,
+        save,
+      });
+      setLoading(false);
+      localStorage.removeItem("save");
+      setSave([]);
+      navigate("/dashboard/user/orders");
+      message.success("Request Completed Successfully ");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
   };
 
@@ -46,11 +130,11 @@ const SavePage = () => {
             </h1>
           </div>
         </div>
-        <div className="container ">
+        <div className="container">
           <div className="row ">
             <div className="col-md-7  p-0 m-0">
               {save?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
+                <div className="row card flex-row p-2" key={p._id}>
                   <div className="col-md-4">
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
@@ -67,7 +151,7 @@ const SavePage = () => {
                   </div>
                   <div className="col-md-4 save-remove-btn">
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-danger "
                       onClick={() => removeSaveItem(p._id)}
                     >
                       Remove
@@ -77,7 +161,7 @@ const SavePage = () => {
               ))}
             </div>
             <div className="col-md-5 save-summary ">
-              <h2>save Summary</h2>
+              <h2>Save Summary</h2>
               <p>Requested products</p>
               <hr />
 
@@ -85,7 +169,7 @@ const SavePage = () => {
                 <>
                   <div className="mb-3">
                     <h4>Current Address</h4>
-                    <h5>{auth?.user?.address}</h5>
+                    <h5>{!loading || !instance || auth?.user?.address}</h5>
                     <button
                       className="btn btn-outline-warning"
                       onClick={() => navigate("/dashboard/user/profile")}
@@ -117,31 +201,38 @@ const SavePage = () => {
                   )}
                 </div>
               )}
-              {/* <div className="mt-2">
+              {/* 
+              <div className="mt-2">
+                <button
+                  onClick={requestDonation}
+                  className="btn btn-primary"
+                  disabled={!auth?.user?.address}
+                >
+                  Request donation
+                </button>
+              </div> */}
+              <div className="mt-2">
                 {!clientToken || !auth?.token || !save?.length ? (
                   ""
                 ) : (
                   <>
-                    <DropIn
+                    <div
                       options={{
                         authorization: clientToken,
-                        paypal: {
-                          flow: "vault",
-                        },
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />
 
                     <button
                       className="btn btn-primary"
-                      onClick={handlePayment}
-                      disabled={loading || !instance || !auth?.user?.address}
+                      onClick={handleRequest}
+                      enable={loading || !instance || !auth?.user?.address}
                     >
-                      {loading ? "Processing ...." : "Make Payment"}
+                      {loading ? "Processing ...." : "Make Request"}
                     </button>
                   </>
                 )}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

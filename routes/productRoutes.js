@@ -1,5 +1,7 @@
 import express from "express";
 import {
+  brainTreePaymentController,
+  braintreeTokenController,
   createProductController,
   deleteProductController,
   getProductController,
@@ -66,5 +68,15 @@ router.get("/related-product/:pid/:cid", realtedProductController);
 
 //category wise product
 router.get("/product-category/:slug", productCategoryController);
+
+//save order
+router.post("/orders", requireSignIn, brainTreePaymentController);
+
+//Request routes
+//token
+router.get("/braintree/token", braintreeTokenController);
+
+//Requests
+router.post("/braintree/request", requireSignIn, brainTreePaymentController);
 
 export default router;
