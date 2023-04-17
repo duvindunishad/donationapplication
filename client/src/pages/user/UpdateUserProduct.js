@@ -80,7 +80,7 @@ const UpdateUserProduct = () => {
       } else {
         toast.success("Product Updated Successfully");
         message.success("Product Updated Successfully");
-        navigate("/dashboard/user/products");
+        navigate("/dashboard/user/product");
       }
     } catch (error) {
       console.log(error);
@@ -98,7 +98,7 @@ const UpdateUserProduct = () => {
         `/api/v1/product/delete-product/${id}`
       );
       toast.success("Product Delete Successfully");
-      navigate("/dashboard/user/products");
+      navigate("/dashboard/user/product");
     } catch (error) {
       console.log(error);
       message.error("Something went wrong");

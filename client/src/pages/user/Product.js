@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../../components/layout/Layout";
 import axios from "axios";
-//import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import UserMenu from "../../components/layout/UserMenu";
+
 const Product = () => {
   const [products, setProducts] = useState([]);
 
-  //getall products
-  const getAllProducts = async () => {
+  // get products by user ID
+  const getProductById = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get("/api/v1/product/get-product-by-user");
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -21,8 +21,9 @@ const Product = () => {
 
   //lifecycle method
   useEffect(() => {
-    getAllProducts();
+    getProductById();
   }, []);
+
   return (
     <Layout>
       <div className="container-fluid m-3 p-3 ">
@@ -31,7 +32,7 @@ const Product = () => {
             <UserMenu />
           </div>
           <div className="col-md-9 ">
-            <h1 className="text-center">All Products List</h1>
+            <h1 className="text-center">Your Products</h1>
             <div className="d-flex flex-wrap">
               {products?.map((p) => (
                 <Link

@@ -4,6 +4,7 @@ import {
   braintreeTokenController,
   createProductController,
   deleteProductController,
+  getProductById,
   getProductController,
   getSingleProductController,
   productCategoryController,
@@ -14,6 +15,7 @@ import {
   realtedProductController,
   searchProductController,
   updateProductController,
+  userProductControl,
 } from "../controllers/ProductController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddlewares.js";
 import formidable from "express-formidable";
@@ -41,6 +43,8 @@ router.put(
 
 //get product
 router.get("/get-product", getProductController);
+
+router.get("/get-product-by-user", getProductById);
 
 //get a single product
 router.get("/get-product/:slug", getSingleProductController);
@@ -78,5 +82,7 @@ router.get("/braintree/token", braintreeTokenController);
 
 //Requests
 router.post("/braintree/request", requireSignIn, brainTreePaymentController);
+
+router.get("/my-products", userProductControl);
 
 export default router;

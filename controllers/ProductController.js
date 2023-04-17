@@ -17,8 +17,10 @@ var gateway = new braintree.BraintreeGateway({
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
 
+//create product
 export const createProductController = async (req, res) => {
   try {
+    const user = req.user;
     const { name, description, expireDate, category, quantity, shipping } =
       req.fields;
     const { photo } = req.files;
@@ -35,13 +37,17 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 10000000:
+      case photo && photo.size > 1000000:
         return res
           .status(500)
           .send({ error: "photo is Required and should be less then 10mb" });
     }
 
-    const products = new productModel({ ...req.fields, slug: slugify(name) });
+    const products = new productModel({
+      ...req.fields,
+      slug: slugify(name),
+      user: user._id,
+    });
     if (photo) {
       products.photo.data = fs.readFileSync(photo.path);
       products.photo.contentType = photo.type;
@@ -73,6 +79,39 @@ export const getProductController = async (req, res) => {
       success: true,
       counTotal: products.length,
       message: "ALlProducts ",
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in getting products",
+      error: error.message,
+    });
+  }
+};
+
+//get product by id
+export const getProductById = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const products = await productModel
+      .find({ user: userId })
+      .populate("category")
+      .select("-photo")
+      .limit(12)
+      .sort({ createdAt: -1 });
+
+    if (!products || products.length === 0) {
+      return res.status(404).send({
+        success: false,
+        message: "No products found for the given user ID",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Products found for the given user ID",
       products,
     });
   } catch (error) {
@@ -371,5 +410,24 @@ export const brainTreePaymentController = async (req, res) => {
     );
   } catch (error) {
     console.log(error);
+  }
+};
+
+// Controller function for getting all user products
+export const userProductControl = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming you have a logged-in user and their ID is stored in req.user.id
+    const products = await productModel
+      .find({ seller: userId }) // Find products based on user ID
+      .populate("category", "name")
+      .sort({ createdAt: "-1" });
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Getting Products",
+      error,
+    });
   }
 };
