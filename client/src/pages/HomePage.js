@@ -4,7 +4,7 @@ import "../styles/Homepage.css";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { Checkbox, Radio } from "antd";
 import { ExpireDate } from "../components/expireDate";
 import { json } from "react-router-dom";
@@ -21,6 +21,39 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  //image slide show
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [images, setImages] = useState([
+    {
+      url: "/images/banner1.png",
+      caption: "Caption for image 1",
+    },
+    {
+      url: "/images/banner2.png",
+      caption: "Caption for image 2",
+    },
+    {
+      url: "/images/banner3.png",
+      caption: "Caption for image 3",
+    },
+    {
+      url: "/images/banner4.png",
+      caption: "Caption for image 4",
+    },
+    {
+      url: "/images/banner5.png",
+      caption: "Caption for image 4",
+    },
+    {
+      url: "/images/banner6.png",
+      caption: "Caption for image 4",
+    },
+    {
+      url: "/images/banner7.png",
+      caption: "Caption for image 4",
+    },
+  ]);
 
   //get all category
   const getAllCategory = async () => {
@@ -112,100 +145,138 @@ const HomePage = () => {
     }
   };
 
+  //image slide shower
+  useEffect(() => {
+    // Use setInterval to change the currentIndex every 3 seconds
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = prevIndex + 1;
+        return nextIndex >= images.length ? 0 : nextIndex;
+      });
+    }, 3000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [images.length]);
+
   return (
     <Layout title={"donate"}>
-      <div className="row mt-3">
-        <div className="col-md-2">
-          <h4 className="text-center">Filter by category</h4>
-          <div className="d-flex flex-column">
-            {categories?.map((c) => (
-              <Checkbox
-                key={c._id}
-                onChange={(e) => handleFilter(e.target.checked, c._id)}
-              >
-                {c.name}
-              </Checkbox>
-            ))}
-          </div>
-          {/* date filter */}
-          <h4 className="text-center mt-4">Filter by date</h4>
-          <div className="d-flex flex-column">
-            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {ExpireDate?.map((p) => (
-                <div key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
-                </div>
-              ))}
-            </Radio.Group>
-          </div>
-          <div className="d-flex flex-column">
-            <button
-              className="btn btn-danger"
-              onClick={() => window.location.reload()}
-            >
-              Filter Reset
-            </button>
-          </div>
+      <div className="slide-container">
+        <div className="slide-image-container">
+          <img
+            src={images[currentIndex].url}
+            className="slide-image"
+            alt="Slide image"
+            width="100%"
+            height={350}
+          />
+          <div className="slide-caption">{images[currentIndex].caption}</div>
         </div>
-        <div className="col-md-9">
-          {/* {JSON.stringify(radio, null, 4)} */}
-          <h1 className="text-center">All products</h1>
-          <div className="d-flex flex-wrap">
-            {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
-                <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">{p.description.substring(0, 30)}</p>
-                  <p className="card-text">ExpireDate : {p.expireDate}</p>
-                  <p className="card-text">
-                    <b>Available : {p.quantity}</b>{" "}
-                  </p>
-
-                  <div className="card-name-expireDate">
-                    <button
-                      class="btn btn-primary ms-3"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      more details
-                    </button>
-                    <button
-                      class="btn btn-secondary ms-5"
-                      onClick={() => {
-                        setSave([...save, p]);
-                        toast.success("Item saved successfully");
-                      }}
-                    >
-                      save
-                    </button>
-                  </div>
-                </div>
+        <div className="slide-dots">
+          {images.map((_, index) => (
+            <span
+              key={index}
+              className={`dot ${index === currentIndex ? "active" : ""}`}
+              onClick={() => setCurrentIndex(index)}
+            ></span>
+          ))}
+          <div className="row mt-3">
+            <div className="col-md-2">
+              <h4 className="text-center">Filter by category</h4>
+              <div className="d-flex flex-column">
+                {categories?.map((c) => (
+                  <Checkbox
+                    key={c._id}
+                    onChange={(e) => handleFilter(e.target.checked, c._id)}
+                  >
+                    {c.name}
+                  </Checkbox>
+                ))}
               </div>
-            ))}
-          </div>
+              {/* date filter */}
+              <h4 className="text-center mt-4">Filter by date</h4>
+              <div className="d-flex flex-column">
+                <Radio.Group onChange={(e) => setRadio(e.target.value)}>
+                  {ExpireDate?.map((p) => (
+                    <div key={p._id}>
+                      <Radio value={p.array}>{p.name}</Radio>
+                    </div>
+                  ))}
+                </Radio.Group>
+              </div>
+              <div className="d-flex flex-column p-1 m-1">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => window.location.reload()}
+                >
+                  Filter Reset
+                </button>
+              </div>
+            </div>
+            <div className="col-md-9">
+              {/* {JSON.stringify(radio, null, 4)} */}
+              <h1 className="text-center">All products</h1>
+              <div className="d-flex flex-wrap">
+                {products?.map((p) => (
+                  <div className="card m-3" style={{ width: "18rem" }}>
+                    <img
+                      src={`/api/v1/product/product-photo/${p._id}`}
+                      className="card-img-top"
+                      alt={p.name}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{p.name}</h5>
+                      <p className="card-text">
+                        {p.description.substring(0, 30)}
+                      </p>
+                      <p className="card-text">ExpireDate : {p.expireDate}</p>
+                      <p className="card-text">
+                        <b>Available : {p.quantity}</b>{" "}
+                      </p>
 
-          <div className="m-2 p-3">
-            {products && products.length < total && (
-              <button
-                className="btn btn-primary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page + 1);
-                }}
-              >
-                Load more
-                {/* {loading ? (
+                      <div className="card-name-expireDate">
+                        <button
+                          class="btn btn-primary ms-3"
+                          onClick={() => navigate(`/product/${p.slug}`)}
+                        >
+                          more details
+                        </button>
+                        <button
+                          class="btn btn-secondary ms-5"
+                          onClick={() => {
+                            setSave([...save, p]);
+                            message.success("Item saved successfully");
+                          }}
+                        >
+                          save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="m-2 p-3">
+                {products && products.length < total && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage(page + 1);
+                    }}
+                  >
+                    Load more
+                    {/* {loading ? (
                   "Loading ..."
                 ) : (
                   <> Loadmore <AiOutlineReload /> </>
                 )} */}
-              </button>
-            )}
-          </div>
+                  </button>
+                )}
+              </div>
+              {/* here two dev tags are related to the image slider */}
+            </div>
+          </div>{" "}
         </div>
       </div>
     </Layout>

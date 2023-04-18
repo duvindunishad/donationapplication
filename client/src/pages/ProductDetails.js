@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { message } from "antd";
+import { useSave } from "../context/save";
 
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const [save, setSave] = useSave();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
 
@@ -63,7 +66,15 @@ const ProductDetails = () => {
             })}
           </h6>
           <h6>Category : {product?.category?.name}</h6>
-          <button class="btn btn-secondary ms-1">SAVE</button>
+          <button
+            class="btn btn-secondary ms-1"
+            onClick={() => {
+              setSave([...save, product]);
+              message.success("Item saved successfully");
+            }}
+          >
+            save
+          </button>
         </div>
       </div>
       <hr />
@@ -79,39 +90,41 @@ const ProductDetails = () => {
                 src={`/api/v1/product/product-photo/${p._id}`}
                 className="card-img-top"
                 alt={p.name}
+                height="100"
+                width={"150px"}
               />
               <div className="card-body">
                 {/* <div className="card-name-expireDate"> */}
-                <h5 className="card-title">{p.name}</h5>
+                <h5 className="card-title">Item Name : {p.name}</h5>
                 {/* <h5 className="card-title card-expireDate">
                     {p.expireDate.toLocaleString("en-US", {
                       style: "date",
                      
                     })}
                   </h5> */}
-              </div>
-              <p className="card-text ">{p.description.substring(0, 60)}...</p>
-              <div className="card-name-expireDate">
-                <button
-                  className="btn btn-info ms-1"
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                >
-                  More Details
-                </button>
+                {/* </div> */}
+                <p className="card-text ">
+                  Item Description : {p.description.substring(0, 60)}...
+                </p>
 
-                {/* <button
-                  className="btn btn-dark ms-1"
+                <div className="card-name-expireDate">
+                  <button
+                    className="btn btn-info ms-1"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </button>
+                </div>
+
+                <button
+                  class="btn btn-secondary ms-1 p-1 m-2"
                   onClick={() => {
-                    setCart([...cart, p]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, p])
-                    );
-                    toast.success("Item Added to cart");
+                    setSave([...save, p]);
+                    message.success("Item saved successfully");
                   }}
                 >
-                  ADD TO CART
-                </button> */}
+                  save
+                </button>
               </div>
             </div>
             // </div>

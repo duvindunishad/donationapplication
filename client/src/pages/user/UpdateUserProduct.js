@@ -92,7 +92,9 @@ const UpdateUserProduct = () => {
   //delete a product
   const handleDelete = async () => {
     try {
-      let answer = window.prompt("Are You Sure want to delete this product ? ");
+      let answer = window.prompt(
+        "Are You Sure want to delete this product then type (yes) ? "
+      );
       if (!answer) return;
       const { data } = await axios.delete(
         `/api/v1/product/delete-product/${id}`
@@ -218,6 +220,7 @@ const UpdateUserProduct = () => {
                   <Option value="1">Yes</Option>
                 </Select>
               </div>
+              {/* if here thise lines commented out delete and update buttons will be not apieared */}
               <div className="mb-3">
                 <button className="btn btn-primary" onClick={handleUpdate}>
                   UPDATE PRODUCT

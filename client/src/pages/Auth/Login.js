@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth";
+import { message } from "antd";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(name,email,password,address,phone);
-    // toast.success("Login success");
+    // message.success("Login success");
     try {
       const res = await axios.post("/api/v1/auth/login", {
         email,
@@ -37,7 +38,7 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify(res.data));
 
         navigate(location.state || "/");
-        toast.success("Login success");
+        message.success("Login success");
       } else {
         toast.error(res.data.message);
       }

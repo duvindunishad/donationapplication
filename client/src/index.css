@@ -61,7 +61,7 @@
     #000000
   ); /* Chrome 10-25, Safari 5.1-6 */
   
-  background: linear-gradient(to right, #88c8d1	, #1d85ed	);
+  background: linear-gradient(to right, #1d85ed	, #1d85ed	);
 }
 
 .footer a {
@@ -217,3 +217,9 @@
 .forgot-btn:hover {
   color: white !important;
 }
+
+/* text paragraph align */
+.justify {
+  text-align: justify;
+}
+
