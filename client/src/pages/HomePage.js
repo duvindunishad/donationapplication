@@ -27,31 +27,24 @@ const HomePage = () => {
   const [images, setImages] = useState([
     {
       url: "/images/banner1.png",
-      caption: "Caption for image 1",
     },
     {
       url: "/images/banner2.png",
-      caption: "Caption for image 2",
     },
     {
       url: "/images/banner3.png",
-      caption: "Caption for image 3",
     },
     {
       url: "/images/banner4.png",
-      caption: "Caption for image 4",
     },
     {
       url: "/images/banner5.png",
-      caption: "Caption for image 4",
     },
     {
       url: "/images/banner6.png",
-      caption: "Caption for image 4",
     },
     {
       url: "/images/banner7.png",
-      caption: "Caption for image 4",
     },
   ]);
 
@@ -161,7 +154,7 @@ const HomePage = () => {
 
   return (
     <Layout title={"donate"}>
-      <div className="slide-container">
+      <div className="slide-container mt-2">
         <div className="slide-image-container">
           <img
             src={images[currentIndex].url}
