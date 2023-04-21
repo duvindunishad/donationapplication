@@ -38,7 +38,7 @@ app.use("/api/v1/user", userRoute);
 
 //old
 //rest api
-app.get("./client/build/index.html", (req, res) => {
+app.get("/", (req, res) => {
   res.send("<h1>welcome to donation application</h1>");
 });
 //rest api
