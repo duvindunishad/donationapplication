@@ -8,7 +8,7 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import userRoute from "./routes/userRoute.js";
-// import path from "path";
+import path from "path";
 // import { fileURLToPath } from "url";
 
 //configure the env
@@ -19,8 +19,8 @@ connectDB();
 
 //esmodule fix
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //rest objects
 const app = express();
@@ -29,7 +29,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-// app.use(express.static(path.join(__dirname, ".client/build")));
+app.use(express.static(path.join(__dirname, "*")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -41,10 +41,13 @@ app.use("/api/v1/user", userRoute);
 //old
 //rest api
 
-app.get("/", (req, res) => {
-  res.send("<h1><u>welcome to donation application</u></h1>");
-});
+// app.get("/", (req, res) => {
+//   res.send("<h1><u>welcome to donation application</u></h1>");
+// });
 
+app.get("*", (req, res) => {
+  res.send(path.join(__dirname, "./client/build/index.html"));
+});
 //rest api
 
 // app.use("*", function (req, res) {
