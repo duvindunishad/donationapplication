@@ -42,7 +42,7 @@ app.use("/api/v1/user", userRoute);
 //rest api
 
 app.get("/", (req, res) => {
-  res.send("<h1>welcome to donation application</h1>");
+  res.send("<h1><u>welcome to donation application</u></h1>");
 });
 
 //rest api
