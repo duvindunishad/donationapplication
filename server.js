@@ -18,7 +18,7 @@ dotenv.config();
 connectDB();
 
 //esmodule fix
-const __filename = fileURLToPath(import.meta.url);
+//const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 //rest objects
 const app = express();
@@ -43,7 +43,7 @@ app.use("/api/v1/user", userRoute);
 // });
 //rest api
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, ".index.html"));
+  res.sendFile(path.join(__dirname, ".client/build/index.html"));
 });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
