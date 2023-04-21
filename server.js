@@ -8,6 +8,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import userRoute from "./routes/userRoute.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 //configure the env
 dotenv.config();
@@ -15,6 +17,9 @@ dotenv.config();
 //database config
 connectDB();
 
+//esmodule fix
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 //rest objects
 const app = express();
 
@@ -22,6 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -30,9 +36,14 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/user", userRoute);
 // app.use("/api/v1/users", userRoute);
 
+//old
 //rest api
-app.get("/", (req, res) => {
-  res.send("<h1>welcome to donation application</h1>");
+// app.get("/", (req, res) => {
+//   res.send("<h1>welcome to donation application</h1>");
+// });
+//rest api
+app.use("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect

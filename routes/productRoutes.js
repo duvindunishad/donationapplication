@@ -6,6 +6,7 @@ import {
   deleteProductController,
   getProductById,
   getProductController,
+  // getProductUserById,
   getSingleProductController,
   productCategoryController,
   productCountController,
@@ -45,6 +46,9 @@ router.put(
 router.get("/get-product", getProductController);
 
 router.get("/get-product-by-user", getProductById);
+
+// //GET PRODUCT BY USER ID
+// router.get("/get-product/:id", getProductUserById);
 
 //get a single product
 router.get("/get-product/:slug", getSingleProductController);

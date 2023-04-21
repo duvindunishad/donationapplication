@@ -91,6 +91,39 @@ export const getProductController = async (req, res) => {
   }
 };
 
+// //get product by according to user id
+// export const getProductUserById = async (req, res) => {
+//   try {
+//     const { pid, userId } = req.params;
+//     const products = await productModel
+//       .find({ user: userId, _id: { $ne: pid } })
+//       .populate("category")
+//       .select("-photo")
+//       .limit(12)
+//       .sort({ createdAt: -1 });
+
+//     if (!products || products.length === 0) {
+//       return res.status(404).send({
+//         success: false,
+//         message: "No products found for the given user ID",
+//       });
+//     }
+
+//     res.status(200).send({
+//       success: true,
+//       message: "Products found for the given user ID",
+//       products,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       success: false,
+//       message: "Error in getting products",
+//       error: error.message,
+//     });
+//   }
+// };
+
 //get product by id
 export const getProductById = async (req, res) => {
   try {

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { useParams, useNavigate } from "react-router-dom";
-// import "../styles/CategoryProductStyles.css";
+import "../styles/CategoryProductStyles.css";
 import axios from "axios";
+import { message } from "antd";
+import { useSave } from "../context/save";
 
 const CategoryProduct = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const [save, setSave] = useSave();
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
 
@@ -51,12 +54,20 @@ const CategoryProduct = () => {
                       <b>Available : {p.quantity}</b>{" "}
                     </p>
                     <button
-                      class="btn btn-primary ms-3"
+                      class="btn btn-primary ms-0"
                       onClick={() => navigate(`/product/${p.slug}`)}
                     >
                       more details
                     </button>
-                    <button class="btn btn-secondary ms-5">save</button>
+                    <button
+                      class="btn btn-secondary ms-0 mt-1"
+                      onClick={() => {
+                        setSave([...save, p]);
+                        message.success("Item saved successfully");
+                      }}
+                    >
+                      save
+                    </button>
                   </div>
                 </div>
               ))}

@@ -4,6 +4,7 @@ import { useSave } from "../context/save";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+// import "../styles/SaveStyles.css";
 import { useParams } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 
@@ -98,6 +99,7 @@ const SavePage = () => {
         // nonce,
         save,
       });
+
       setLoading(false);
       localStorage.removeItem("save");
       setSave([]);
@@ -111,14 +113,14 @@ const SavePage = () => {
 
   return (
     <Layout>
-      <div className="container">
+      <div className="save-page">
         <div className="row">
           <div className="col-md-12">
             <h1 className="text-center bg-light p-2 mb-1">
               {!auth?.user
                 ? "Hello Guest"
                 : `Hello  ${auth?.token && auth?.user?.name}`}
-              <h4 className="text-center">
+              <p className="text-center">
                 {save?.length
                   ? `You Have ${save.length} items in your save ${
                       auth?.token
@@ -126,7 +128,7 @@ const SavePage = () => {
                         : "please login to checkout & request the donation !"
                     }`
                   : " Your save Is Empty"}
-              </h4>
+              </p>
             </h1>
           </div>
         </div>

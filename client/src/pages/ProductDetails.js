@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useSave } from "../context/save";
+import "../styles/CategoryProductStyles.css";
 
 const ProductDetails = () => {
   const params = useParams();

@@ -175,7 +175,7 @@ const HomePage = () => {
           ))}
           <div className="row mt-3">
             <div className="col-md-2">
-              <h4 className="text-center">Filter by category</h4>
+              <h5 className="text-center">FILTER BY CATEGORY</h5>
               <div className="d-flex flex-column">
                 {categories?.map((c) => (
                   <Checkbox
@@ -187,7 +187,7 @@ const HomePage = () => {
                 ))}
               </div>
               {/* date filter */}
-              <h4 className="text-center mt-4">Filter by date</h4>
+              <h4 className="text-center mt-4">FILTER BY DATE</h4>
               <div className="d-flex flex-column">
                 <Radio.Group onChange={(e) => setRadio(e.target.value)}>
                   {ExpireDate?.map((p) => (
@@ -208,7 +208,7 @@ const HomePage = () => {
             </div>
             <div className="col-md-9">
               {/* {JSON.stringify(radio, null, 4)} */}
-              <h1 className="text-center">All products</h1>
+              <h1 className="text-center">ALL PRODUCTS</h1>
               <div className="d-flex flex-wrap">
                 {products?.map((p) => (
                   <div className="card m-3" style={{ width: "18rem" }}>
