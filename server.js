@@ -43,7 +43,7 @@ app.use("/api/v1/user", userRoute);
 // });
 //rest api
 app.use("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../../index.html"));
 });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
