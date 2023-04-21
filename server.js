@@ -29,7 +29,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, `./client/build`)));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -48,11 +48,12 @@ app.use("/api/v1/user", userRoute);
 //rest api
 
 app.use("/", function (req, res) {
-  res.sendFile(path.join(__dirname, `./client/build/index.html`));
+  // res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
-const port = process.env.PORT || 8080;
+const port = process.env.port || 8080;
 
 //run list
 
