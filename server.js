@@ -27,7 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "../public/static/js")));
+app.use(express.static(path.join(__dirname, "../../index.html")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
