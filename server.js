@@ -49,7 +49,7 @@ app.use("/api/v1/user", userRoute);
 
 //rest api
 
-app.use("./client", function (req, res) {
+app.use(function (req, res) {
   res.sendFile(
     path.join(__dirname, "./client/build/index.html"),
     function (err) {
