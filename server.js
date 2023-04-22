@@ -50,12 +50,9 @@ app.use("/api/v1/user", userRoute);
 //rest api
 
 app.use("*", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
+  res.sendFile(path.join(__dirname, "client/build/index.html"), function (err) {
+    res.status(500).send(err);
+  });
 });
 // app.get("/", function (req, res) {
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
