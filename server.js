@@ -30,7 +30,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 // app.use(express.static(path.join(__dirname, "./client/build")));
-app.use(express.static(path.join(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "./client/public")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -50,7 +50,7 @@ app.use("/api/v1/user", userRoute);
 
 app.use("*", function (req, res) {
   res.sendFile(
-    path.join(__dirname, "./client/build/index.html"),
+    path.join(__dirname, "./client/public/index.html"),
     function (err) {
       res.status(500).send(err);
     }
