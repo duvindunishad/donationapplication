@@ -9,7 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import userRoute from "./routes/userRoute.js";
 import path from "path";
-import { fileURLToPath } from "url";
+// import { fileURLToPath } from "url";
 
 //configure the env
 dotenv.config();
@@ -19,7 +19,7 @@ connectDB();
 
 //esmodule fix
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = import.meta.url;
 const __dirname = path.dirname(__filename);
 
 //rest objects
@@ -50,7 +50,7 @@ app.use("/api/v1/user", userRoute);
 
 app.use("*", function (req, res) {
   res.sendFile(
-    path.join(__dirname, "./client/public/index.html"),
+    path.join(__dirname, "./client/build/index.html"),
     function (err) {
       res.status(500).send(err);
     }
