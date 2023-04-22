@@ -51,7 +51,7 @@ app.use("/api/v1/user", userRoute);
 app.get("*", function (_, res) {
   res.sendFile(
     path.join(__dirname, "../client/build/index.html"),
-    function (erro) {
+    function (err) {
       res.status(500).send(err);
     }
   );
