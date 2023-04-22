@@ -9,7 +9,8 @@ import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import userRoute from "./routes/userRoute.js";
 import path from "path";
-// import { fileURLToPath } from "url";
+import { fileURLToPath } from "url";
+import { URL } from "url";
 
 //configure the env
 dotenv.config();
@@ -19,7 +20,7 @@ connectDB();
 
 //esmodule fix
 
-const __filename = import.meta.url;
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //rest objects
