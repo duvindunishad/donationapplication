@@ -61,12 +61,12 @@ app.use("*", function (req, res) {
 // });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
-const port = process.env.port || 8080;
+const PORT = process.env.PORT || 8080;
 
 //run list
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(
-    `server run on ${process.env.DEV_MODE} mode on port ${port}`.bgCyan.white
+    `server run on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white
   );
 });
