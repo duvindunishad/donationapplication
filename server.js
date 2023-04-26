@@ -42,17 +42,17 @@ app.use("/api/v1/user", userRoute);
 //old
 //rest api need to active when deploy offline localhost
 
-// app.get("/", (req, res) => {
-//   res.send("<h1><u>welcome to donation application</u></h1>");
-// });
+app.get("/", (req, res) => {
+  res.send("<h1><u>welcome to donation application</u></h1>");
+});
 
 //rest api need to active when deploy online
 
-app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"), function (err) {
-    res.status(500).send(err);
-  });
-});
+// app.use("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client/build/index.html"), function (err) {
+//     res.status(500).send(err);
+//   });
+// });
 
 //port, here add 8080 port , if their any erro from the env file ,but port will work perfect
 const PORT = process.env.PORT || 8080;

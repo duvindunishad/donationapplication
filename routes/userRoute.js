@@ -5,6 +5,7 @@ const router = express.Router();
 import {
   deleteUserController,
   getAllUsersController,
+  updateUserRoleController,
 } from "../controllers/userController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddlewares.js";
 
@@ -17,6 +18,14 @@ router.delete(
   deleteUserController,
   isAdmin,
   requireSignIn
+);
+
+// update user role
+router.put(
+  "/update-role/:id/role",
+  isAdmin,
+  requireSignIn,
+  updateUserRoleController
 );
 
 export default router;

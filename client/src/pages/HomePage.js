@@ -174,8 +174,8 @@ const HomePage = () => {
             ></span>
           ))}
           <div className="row mt-3">
-            <div className="col-md-2">
-              <h5 className="text-center">FILTER BY CATEGORY</h5>
+            <div className="col-md-3">
+              <h5 className="text-center mt-4">FILTER BY CATEGORY</h5>
               <div className="d-flex flex-column">
                 {categories?.map((c) => (
                   <Checkbox
@@ -211,7 +211,7 @@ const HomePage = () => {
               <h1 className="text-center">ALL PRODUCTS</h1>
               <div className="d-flex flex-wrap">
                 {products?.map((p) => (
-                  <div className="card m-3" style={{ width: "18rem" }}>
+                  <div className="card m-3 p-2" style={{ width: "19rem" }}>
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
                       className="card-img-top"
@@ -227,7 +227,7 @@ const HomePage = () => {
                         <b>Available : {p.quantity}</b>{" "}
                       </p>
 
-                      <div className="card-name-expireDate">
+                      <div className="card-name-save">
                         <button
                           class="btn btn-primary ms-3"
                           onClick={() => navigate(`/product/${p.slug}`)}

@@ -242,11 +242,11 @@
   background-color: rgba(128, 128, 128, 0.097);
   /* width: 18rem; */
 }
-/* .card-name-price {
+.card-name-save {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-} */
+}
 
 .card-text {
   font-weight: bold;
@@ -263,7 +263,9 @@
 .card-text {
   color: rgb(90, 89, 89);
 }
-
+.card-title{
+  color: #0b71d7;
+}
 .card img:hover {
   transform: scale(0.9);
 }
@@ -305,7 +307,7 @@
   width: 18rem;
 }
 
-.similar-products .card-price {
+.similar-products .card-save {
   font-weight: bold;
 }
 .similar-products button {

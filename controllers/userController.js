@@ -1,7 +1,6 @@
 // import productModel from "../models/productModel.js";
 // import categoryModel from "../models/categoryModel.js";
 // import orderModel from "../models/orderModel.js";
-
 // import fs from "fs";
 import slugify from "slugify";
 // import braintree from "braintree";
@@ -45,5 +44,37 @@ export const deleteUserController = async (req, res) => {
       message: "Error while deleting user",
       error,
     });
+  }
+};
+
+//manage user's role
+export const updateUserRoleController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    // Find the user by ID
+    const users = await userModel.findById(id);
+
+    // Check if the user exists
+    if (!users) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Update the user's role
+    users.role = role;
+
+    // Save the updated user in the database
+    await users.save();
+
+    // Send a success response
+    res
+      .status(200)
+      .json({ success: true, message: "User role has been updated" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };

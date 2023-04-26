@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useSave } from "../context/save";
 import "../styles/CategoryProductStyles.css";
+import { FaLine } from "react-icons/fa";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -45,8 +46,9 @@ const ProductDetails = () => {
 
   return (
     <Layout>
-      <div className="row container product-details">
-        <div className="col-md-6">
+      <div className="row container mt-4">
+        <div className="col-md-1"></div>
+        <div className="col-md-4">
           <img
             src={`/api/v1/product/product-photo/${product._id}`}
             className="card-img-top"
@@ -55,11 +57,14 @@ const ProductDetails = () => {
             width={"350px"}
           />
         </div>
+        <div className="col-md-1"></div>
         <div className="col-md-6 product-details-info">
           <h1 className="text-center">Product Details</h1>
           <hr />
           <h6>Name : {product.name}</h6>
-          <h6>Description : {product.description}</h6>
+          <h6 className="text-align: justify">
+            Description : {product.description}
+          </h6>
           <h6>
             expireDate :
             {product?.expireDate?.toLocaleString("en-US", {
@@ -84,9 +89,9 @@ const ProductDetails = () => {
         {relatedProducts.length < 1 && (
           <p className="text-center">No Similar Products found</p>
         )}
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap ">
           {relatedProducts?.map((p) => (
-            <div className="card m-2" key={p._id}>
+            <div className="card m-5" key={p._id}>
               <img
                 src={`/api/v1/product/product-photo/${p._id}`}
                 className="card-img-top"
@@ -104,7 +109,7 @@ const ProductDetails = () => {
                     })}
                   </h5> */}
                 {/* </div> */}
-                <p className="card-text ">
+                <p className="card-text text-align: justify">
                   Item Description : {p.description.substring(0, 60)}...
                 </p>
 
