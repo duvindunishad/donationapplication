@@ -2,10 +2,11 @@ import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import Jwt from "jsonwebtoken";
+//import multer from "multer";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer } = req.body;
+    const { name, email, password, phone, address, answer, photo } = req.body;
     // validatron part
     if (!name) {
       return res.send({ message: "Name is require" });
@@ -25,6 +26,9 @@ export const registerController = async (req, res) => {
     if (!answer) {
       return res.send({ message: "Answer is require" });
     }
+    // if (!photo) {
+    //   return res.send({ message: "Photo is require" });
+    // }
 
     //check the exsisting users
     const exsistingUser = await userModel.findOne({ email });
@@ -45,6 +49,7 @@ export const registerController = async (req, res) => {
       address,
       password: hashedPassword,
       answer,
+      //  photo,
     }).save();
 
     res.status(201).send({
@@ -102,6 +107,7 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         address: user.address,
         role: user.role,
+        //photo: user.photo,
       },
       token,
     });

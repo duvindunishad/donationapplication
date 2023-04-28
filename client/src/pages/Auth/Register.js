@@ -43,6 +43,19 @@ const Register = () => {
     }
   };
 
+  //   if (res && res.data.success) {
+  //     toast.success(res.data && res.data.message);
+  //     navigate("/login");
+  //     toast.success("Register success");
+  //   } else {
+  //     toast.error(res.data.message);
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  //   toast.error("Something went wrong");
+  // }
+  // };
+
   return (
     <Layout title="Register -Donation application ">
       <div className="form-container">
@@ -115,6 +128,19 @@ const Register = () => {
               required
             />
           </div>
+          {/* <div className="mb-3">
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              name="photo"
+              onChange={(e) => setPhoto(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="Upload your face original photo"
+              // onChange={imageUpload}
+              // onChange={handlePhoto}
+            />
+          </div> */}
           <button type="submit" className="btn btn-primary">
             REGISTER
           </button>
