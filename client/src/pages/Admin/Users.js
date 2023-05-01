@@ -5,6 +5,7 @@ import axios from "axios";
 // import { message } from "antd";
 import { Form, Select, Button, message } from "antd";
 import { Modal } from "antd";
+import RoleForm from "../../components/Form/RoleForm";
 
 const { Option } = Select;
 
@@ -15,11 +16,13 @@ const Users = () => {
   // const [role, setRole] = useState("");
   //const [newRole, setRole] = useState("");
 
+  const [newRole, setNewRole] = useState("");
+
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [updatedName, setUpdatedName] = useState("");
+  const [updatedRole, setUpdatedRole] = useState("");
 
   const [role, setRole] = useState("");
 
@@ -64,25 +67,38 @@ const Users = () => {
   };
 
   //update user role
-  const onFinish = async (id, newRole) => {
-    // role.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const { data } = await axios.put(`/api/v1/user/update-role/${id}`, {
-        role: newRole,
-      });
-      if (data.success) {
-        setRole(data.newRole);
-        message.success(`User role ${newRole} has been updated`);
+      const { data } = await axios.put(
+        `/api/v1/user/update-role/${selected._id}`,
+        { role: updatedRole } // send updated role in request body
+      );
+      if (data?.success) {
+        message.success(`${selected.role}'s role updated to ${updatedRole}`);
         setSelected(null);
-        setRole("");
+        setUpdatedRole("");
+        setVisible(false);
         getAllUsers();
       } else {
         message.error(data.message);
       }
     } catch (error) {
-      message.error("Something went wrong");
+      console.log(error);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await axios.put(`/update-role/:${id}`, {
+  //       role: newRole,
+  //     });
+  //     console.log(res.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <Layout title={"Dashboard - Users"}>
@@ -132,11 +148,16 @@ const Users = () => {
                               </Select>
                             </Form.Item>
 
+                            <RoleForm
+                              value={updatedRole}
+                              setValue={setUpdatedRole}
+                              handleSubmit={handleSubmit}
+                            />
                             <Button
                               type="primary"
                               loading={loading}
                               onClick={() => {
-                                onFinish(id);
+                                handleSubmit(id);
                               }}
                             >
                               Update Role

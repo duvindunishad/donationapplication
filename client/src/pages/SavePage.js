@@ -56,7 +56,7 @@ const SavePage = () => {
       setSave([]);
 
       message.success("Request successful.");
-      navigate("/dashboard/user/orders", { state: { items } }); // pass items as a prop to the order page
+      navigate("/dashboard/donationReciver/orders", { state: { items } }); // pass items as a prop to the order page
     } catch (error) {
       console.log(error);
     } finally {
@@ -102,8 +102,9 @@ const SavePage = () => {
 
       setLoading(false);
       localStorage.removeItem("save");
+
       setSave([]);
-      navigate("/dashboard/user/orders");
+      navigate("/dashboard/donationReciver/orders");
       message.success("Request Completed Successfully ");
     } catch (error) {
       console.log(error);
@@ -175,7 +176,9 @@ const SavePage = () => {
                     <h5>{!loading || !instance || auth?.user?.address}</h5>
                     <button
                       className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
+                      onClick={() =>
+                        navigate("/dashboard/donationReciver/profile")
+                      }
                     >
                       Update Address
                     </button>
@@ -186,7 +189,9 @@ const SavePage = () => {
                   {auth?.token ? (
                     <button
                       className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
+                      onClick={() =>
+                        navigate("/dashboard/donationReciver/profile")
+                      }
                     >
                       Update Address
                     </button>
@@ -204,8 +209,8 @@ const SavePage = () => {
                   )}
                 </div>
               )}
-              {/* 
-              <div className="mt-2">
+
+              {/* <div className="mt-2">
                 <button
                   onClick={requestDonation}
                   className="btn btn-primary"
@@ -225,11 +230,20 @@ const SavePage = () => {
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />
-
+                    {/* here i create to only enable the request button when requester is an donation requester */}
                     <button
                       className="btn btn-primary"
                       onClick={handleRequest}
-                      enable={loading || !instance || !auth?.user?.address}
+                      enable={
+                        loading ||
+                        !instance ||
+                        !auth?.user?.address ||
+                        !auth?.user?.role === "donationreciver"
+                      }
+                      disabled={
+                        auth?.user?.role === "users" ||
+                        auth?.user?.role === "admin"
+                      }
                     >
                       {loading ? "Processing ...." : "Make Request"}
                     </button>

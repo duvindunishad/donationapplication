@@ -50,29 +50,17 @@ export const deleteUserController = async (req, res) => {
 //manage user's role
 export const updateUserRoleController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { role } = req.body;
+    const { id } = req.params; // get the user ID from the request parameters
+    const { role } = req.body; // get the new role from the request body
 
-    // Find the user by ID
-    const users = await userModel.findById(id);
-
-    // Check if the user exists
-    if (!users) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
-
-    // Update the user's role
-    users.role = role;
-
-    // Save the updated user in the database
-    await users.save();
-
-    // Send a success response
-    res
-      .status(200)
-      .json({ success: true, message: "User role has been updated" });
+    User.findByIdAndUpdate(id, { role }, { new: true }, (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        res.json(updatedUser);
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Something went wrong" });

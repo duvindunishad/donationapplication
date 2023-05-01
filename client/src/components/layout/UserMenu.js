@@ -34,12 +34,12 @@ const UserMenu = () => {
             Orders State
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to="/dashboard/user/orders"
             className="list-group-item list-group-item-action"
           >
             Orders
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </>

@@ -38,3 +38,49 @@ export const isAdmin = async (req, res, next) => {
     });
   }
 };
+
+//donation receiver access
+export const isDonationreciver = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+    // if (user.role !== 1) { change this to below one
+    if (user.role !== "donationreciver") {
+      return res.status(401).send({
+        success: false,
+        message: "UnAuthorize access",
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(401).send({
+      success: false,
+      error,
+      message: "Error in donationreciver middleware",
+    });
+  }
+};
+
+//user access
+export const isUser = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+    // if (user.role !== 1) { change this to below one
+    if (user.role !== "users") {
+      return res.status(401).send({
+        success: false,
+        message: "UnAuthorize access",
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(401).send({
+      success: false,
+      error,
+      message: "Error in User middleware",
+    });
+  }
+};

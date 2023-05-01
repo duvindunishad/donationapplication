@@ -18,7 +18,11 @@ import {
   updateProductController,
   userProductControl,
 } from "../controllers/ProductController.js";
-import { isAdmin, requireSignIn } from "../middlewares/authMiddlewares.js";
+import {
+  isAdmin,
+  isDonationreciver,
+  requireSignIn,
+} from "../middlewares/authMiddlewares.js";
 import formidable from "express-formidable";
 
 const router = express.Router();
@@ -37,7 +41,7 @@ router.post(
 router.put(
   "/update-product/:pid",
   requireSignIn,
-  //  isAdmin,
+  isAdmin,
   formidable(),
   updateProductController
 );
@@ -82,10 +86,15 @@ router.post("/orders", requireSignIn, brainTreePaymentController);
 
 //Request routes
 //token
-router.get("/braintree/token", braintreeTokenController);
+router.get("/braintree/token", braintreeTokenController, isDonationreciver);
 
 //Requests
-router.post("/braintree/request", requireSignIn, brainTreePaymentController);
+router.post(
+  "/braintree/request",
+  requireSignIn,
+  brainTreePaymentController,
+  isDonationreciver
+);
 
 router.get("/my-products", userProductControl);
 

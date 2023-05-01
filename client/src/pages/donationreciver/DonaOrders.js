@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
-import UserMenu from "../../components/layout/UserMenu";
+//import UserMenu from "../../components/layout/UserMenu";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import moment from "moment";
+import DonationReciverMenu from "../../components/layout/DonationReciverMenu";
 
-const Orders = () => {
+const DonaOrders = () => {
   // // import necessary modules
   // const mongoose = require("mongoose");
 
@@ -45,9 +46,9 @@ const Orders = () => {
       <div className="container-fluid p-3 m-3">
         <div className="row">
           <div className="col-md-3">
-            <UserMenu />
+            <DonationReciverMenu />
           </div>
-          <div className="col-md-9 mt-2">
+          <div className="col-md-9 mt-1">
             <h1 className="text-center">All Orders</h1>
             {orders?.map((o, i) => {
               return (
@@ -59,7 +60,6 @@ const Orders = () => {
                         <th scope="col">Status</th>
                         <th scope="col">Buyer</th>
                         <th scope="col"> Date</th>
-                        <th scope="col"> Address</th>
                         {/* <th scope="col">Request</th> */}
                         <th scope="col">Quantity</th>
                       </tr>
@@ -70,7 +70,6 @@ const Orders = () => {
                         <td>{o?.status}</td>
                         <td>{o?.buyer?.name}</td>
                         <td>{moment(o?.createAt).fromNow()}</td>
-                        <td>{o?.buyer?.address}</td>
                         {/* <td>{o?.expireDate.success ? "Success" : "Failed"}</td> */}
                         <td>{o?.products?.length}</td>
                       </tr>
@@ -106,4 +105,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default DonaOrders;

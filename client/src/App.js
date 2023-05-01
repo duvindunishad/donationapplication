@@ -32,6 +32,10 @@ import CategoryProduct from "./pages/CategoryProduct";
 import SavePage from "./pages/SavePage";
 import UsersOrders from "./pages/user/UsersOrders";
 import AdminOrders from "./pages/Admin/AdminOrders";
+import DonationReciverRoute from "./components/layout/Routes/DonationReciverRoute";
+import DonationReciverDashboard from "./pages/donationreciver/DonationReciverDashboard";
+import DonaOrders from "./pages/donationreciver/DonaOrders";
+import DonaProfile from "./pages/donationreciver/DonaProfile";
 
 function App() {
   return (
@@ -56,6 +60,33 @@ function App() {
           <Route path="user/order" element={<UsersOrders />} />
         </Route>
 
+        {/* DonationReciver */}
+
+        <Route path="/dashboard" element={<DonationReciverRoute />}>
+          <Route
+            path="donationReciver"
+            element={<DonationReciverDashboard></DonationReciverDashboard>}
+          />
+          <Route
+            path="donationReciver/orders"
+            element={<DonaOrders></DonaOrders>}
+          />
+          <Route
+            path="donationReciver/profile"
+            element={<DonaProfile></DonaProfile>}
+          />
+          <Route
+            path="donationReciver/create-product"
+            element={<CreateProducts />}
+          />
+          <Route
+            path="donationReciver/product/:slug"
+            element={<UpdateUserProduct />}
+          />
+          <Route path="donationReciver/product" element={<Product />} />
+
+          <Route path="donationReciver/order" element={<UsersOrders />} />
+        </Route>
         {/* admin */}
 
         <Route path="/dashboard" element={<AdminRoute />}>

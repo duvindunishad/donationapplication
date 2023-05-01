@@ -2,60 +2,83 @@ import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import Jwt from "jsonwebtoken";
-//import multer from "multer";
+import multer from "multer";
+
+// configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer, photo } = req.body;
-    // validatron part
+    const { name, email, password, phone, address, answer } = req.body;
+    // validation part
     if (!name) {
-      return res.send({ message: "Name is require" });
+      return res.send({ message: "Name is required" });
     }
     if (!email) {
-      return res.send({ message: "Email is require" });
+      return res.send({ message: "Email is required" });
     }
     if (!password) {
-      return res.send({ message: "Password is require" });
+      return res.send({ message: "Password is required" });
     }
     if (!phone) {
-      return res.send({ message: "Phone number is require" });
+      return res.send({ message: "Phone number is required" });
     }
     if (!address) {
-      return res.send({ message: "Address is require" });
+      return res.send({ message: "Address is required" });
     }
     if (!answer) {
-      return res.send({ message: "Answer is require" });
+      return res.send({ message: "Answer is required" });
     }
-    // if (!photo) {
-    //   return res.send({ message: "Photo is require" });
-    // }
 
-    //check the exsisting users
-    const exsistingUser = await userModel.findOne({ email });
-    if (exsistingUser) {
+    // check the existing users
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
       return res.status(200).send({
         success: true,
-        message: "Already registered please login",
+        message: "Already registered, please login",
       });
     }
-    //register user
-    const hashedPassword = await hashPassword(password);
 
-    //save
-    const user = new userModel({
-      name,
-      email,
-      phone,
-      address,
-      password: hashedPassword,
-      answer,
-      //  photo,
-    }).save();
+    // save the image to MongoDB
+    upload.single("photo")(req, res, async (err) => {
+      if (err) {
+        return res.status(400).send({
+          success: false,
+          message: "Error uploading image",
+          error: err,
+        });
+      }
 
-    res.status(201).send({
-      success: true,
-      message: "User registration successfully",
-      user,
+      const photo = req.file ? req.file.filename : null;
+
+      // register user
+      const hashedPassword = await hashPassword(password);
+
+      // save user with photo
+      const user = new userModel({
+        name,
+        email,
+        phone,
+        address,
+        password: hashedPassword,
+        answer,
+        photo,
+      }).save();
+
+      res.status(201).send({
+        success: true,
+        message: "User registration successful",
+        user,
+      });
     });
   } catch (error) {
     console.log(error);
@@ -107,7 +130,6 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         address: user.address,
         role: user.role,
-        //photo: user.photo,
       },
       token,
     });

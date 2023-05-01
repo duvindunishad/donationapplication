@@ -14,13 +14,15 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
+  const [photo, setPhoto] = useState("");
+
   const navigate = useNavigate();
 
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(name, email, password, address, phone);
-    toast.success("Register success");
+    //toast.success("Register success");
     try {
       const res = await axios.post("/api/v1/auth/register", {
         name,
@@ -29,6 +31,7 @@ const Register = () => {
         phone,
         address,
         answer,
+        photo,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -128,22 +131,37 @@ const Register = () => {
               required
             />
           </div>
-          {/* <div className="mb-3">
+          <div className="mb-3">
+            {photo ? photo.name : "Upload Your Face Photo Below"}
             <input
               type="file"
-              accept=".png, .jpg, .jpeg"
               name="photo"
-              onChange={(e) => setPhoto(e.target.value)}
-              className="form-control"
+              accept="image/*"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              className="form-control mt-3"
               id="exampleInputEmail1"
               placeholder="Upload your face original photo"
               // onChange={imageUpload}
               // onChange={handlePhoto}
             />
-          </div> */}
-          <button type="submit" className="btn btn-primary">
-            REGISTER
-          </button>
+          </div>
+          <div className="mb-3">
+            {photo && (
+              <div className="text-center">
+                <img
+                  src={URL.createObjectURL(photo)}
+                  alt="product_photo"
+                  height={"200px"}
+                  className="img img-responsive"
+                />
+              </div>
+            )}
+          </div>
+          <div className="text-center">
+            <button type="submit" className="btn btn-primary ">
+              REGISTER
+            </button>
+          </div>
         </form>
       </div>
     </Layout>

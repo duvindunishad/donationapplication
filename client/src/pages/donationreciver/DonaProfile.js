@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
-import UserMenu from "../../components/layout/UserMenu";
+//import UserMenu from "../../components/layout/UserMenu";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 //import { toast } from "react-hot-toast";
 import axios from "axios";
 import { message } from "antd";
+import DonationReciverMenu from "../../components/layout/DonationReciverMenu";
 
-const Profile = () => {
+const DonaProfile = () => {
   //context
   const [auth, setAuth] = useAuth();
 
@@ -61,12 +62,12 @@ const Profile = () => {
       <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-3">
-            <UserMenu />
+            <DonationReciverMenu />
           </div>
           <div className="col-md-8">
             <div className="form-container" style={{ marginTop: "-40px" }}>
               <form onSubmit={handleSubmit}>
-                <h4 className="title">USER PROFILE</h4>
+                <h4 className="title">DONATION RECEIVER PROFILE</h4>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -133,4 +134,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default DonaProfile;

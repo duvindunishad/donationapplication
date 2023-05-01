@@ -105,9 +105,14 @@ const Header = () => {
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>
+                        {/* here i create to redirect paths */}
                         <NavLink
                           to={`/dashboard/${
-                            auth?.user?.role === "admin" ? "admin" : "user"
+                            auth?.user?.role === "admin"
+                              ? "admin"
+                              : auth?.user?.role === "donationreciver"
+                              ? "donationreciver"
+                              : "user"
                           }`}
                           className="dropdown-item"
                         >

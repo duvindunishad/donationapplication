@@ -127,7 +127,7 @@ export const getProductController = async (req, res) => {
 //get product by id
 export const getProductById = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params._id;
     const products = await productModel
       .find({ user: userId })
       .populate("category")
@@ -157,7 +157,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-//ger a single product
+//get a single product
 export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel

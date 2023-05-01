@@ -10,7 +10,13 @@ import {
   getAllOrdersController,
   orderStatusController,
 } from "../controllers/authController.js";
-import { isAdmin, requireSignIn } from "../middlewares/authMiddlewares.js";
+import {
+  isAdmin,
+  isDonationreciver,
+  isUser,
+  requireSignIn,
+} from "../middlewares/authMiddlewares.js";
+import formidable from "express-formidable";
 
 //rout object
 const router = express.Router();
@@ -18,7 +24,7 @@ const router = express.Router();
 //routing
 //register|| method post
 
-router.post("/register", registerController);
+router.post("/register", registerController, formidable());
 
 //login ||post
 router.post("/login", loginController);
@@ -33,7 +39,15 @@ router.get("/test", requireSignIn, isAdmin, testController);
 router.get("/user-auth", requireSignIn, (req, res) => {
   res.status(200).send({ ok: true });
 });
-
+//protected user route auth
+router.get(
+  "/donationreciver-auth",
+  requireSignIn,
+  isDonationreciver,
+  (req, res) => {
+    res.status(200).send({ ok: true });
+  }
+);
 //protected Admin route auth
 router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
@@ -46,15 +60,21 @@ router.put("/profile", requireSignIn, updateProfileController);
 router.get("/orders", requireSignIn, getOrdersController);
 
 //all orders
-router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
+router.get(
+  "/all-orders",
+  requireSignIn,
+  isAdmin,
 
-router.get("/all-order", requireSignIn, getAllOrdersControl);
+  getAllOrdersController
+);
+
+router.get("/all-order", requireSignIn, isUser, getAllOrdersControl);
 
 // order status update
 router.put(
   "/order-status/:orderId",
   requireSignIn,
-  isAdmin,
+
   orderStatusController
 );
 
