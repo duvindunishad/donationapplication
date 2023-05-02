@@ -13,6 +13,7 @@ const DonaProfile = () => {
   const [auth, setAuth] = useAuth();
 
   //state
+  const [nic, setNic] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +22,8 @@ const DonaProfile = () => {
 
   //get user data
   useEffect(() => {
-    const { email, name, phone, address } = auth?.user;
+    const { nic, email, name, phone, address } = auth?.user;
+    setNic(nic);
     setName(name);
     setPhone(phone);
     setEmail(email);
@@ -33,6 +35,7 @@ const DonaProfile = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put("/api/v1/auth/profile", {
+        nic,
         name,
         email,
         password,
@@ -71,12 +74,25 @@ const DonaProfile = () => {
                 <div className="mb-3">
                   <input
                     type="text"
+                    value={nic}
+                    onChange={(e) => setNic(e.target.value)}
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Enter Your Nic"
+                    autoFocus
+                    disabled
+                  />
+                </div>
+                <div className="mb-3">
+                  <input
+                    type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="form-control"
                     id="exampleInputEmail1"
                     placeholder="Enter Your Name"
-                    autoFocus
+                    //autoFocus
+                    disabled
                   />
                 </div>
                 <div className="mb-3">
@@ -119,12 +135,14 @@ const DonaProfile = () => {
                     className="form-control"
                     id="exampleInputEmail1"
                     placeholder="Enter Your Address"
+                    disabled
                   />
                 </div>
-
-                <button type="submit" className="btn btn-primary">
-                  UPDATE
-                </button>
+                <div className="text-center">
+                  <button type="submit" className="btn btn-primary">
+                    UPDATE
+                  </button>
+                </div>
               </form>
             </div>
           </div>

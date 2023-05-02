@@ -116,7 +116,7 @@ const Users = () => {
                     <div className="card-body">
                       <h5 className="card-title">Name : {users.name}</h5>
                       <p className="card-text">Email : {users.email}</p>
-                      <p className="card-text">Is Admin : {users.role}</p>
+                      <p className="card-text">Role : {users.role}</p>
 
                       <div className="col-md-mb-3">
                         <button
@@ -148,11 +148,11 @@ const Users = () => {
                               </Select>
                             </Form.Item>
 
-                            <RoleForm
+                            {/* <RoleForm
                               value={updatedRole}
                               setValue={setUpdatedRole}
                               handleSubmit={handleSubmit}
-                            />
+                            /> */}
                             <Button
                               type="primary"
                               loading={loading}

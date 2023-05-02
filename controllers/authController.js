@@ -18,8 +18,11 @@ const upload = multer({ storage: storage });
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer } = req.body;
+    const { nic, name, email, password, phone, address, answer } = req.body;
     // validation part
+    if (!nic) {
+      return res.send({ message: "Nic is required" });
+    }
     if (!name) {
       return res.send({ message: "Name is required" });
     }
@@ -39,12 +42,20 @@ export const registerController = async (req, res) => {
       return res.send({ message: "Answer is required" });
     }
 
+    //check the existing NIC
+    const existingUsers = await userModel.findOne({ nic });
+    if (existingUsers) {
+      return res.status(200).send({
+        success: true,
+        message: "Already registered nic, please login",
+      });
+    }
     // check the existing users
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.status(200).send({
         success: true,
-        message: "Already registered, please login",
+        message: "Already registered email, please login",
       });
     }
 
@@ -65,6 +76,7 @@ export const registerController = async (req, res) => {
 
       // save user with photo
       const user = new userModel({
+        nic,
         name,
         email,
         phone,
@@ -163,7 +175,7 @@ export const forgotPasswordController = async (req, res) => {
     if (!user) {
       return res.status(404).send({
         success: false,
-        message: "Email is not registerd",
+        message: "Email is not registered",
       });
     }
     const hashed = await hashPassword(newPassword);

@@ -4,10 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
+import { message } from "antd";
 
 //import "../../styles/AuthStyles.css";
 //import { Toast } from "react-toastify/dist/components";
 const Register = () => {
+  const [nic, setNic] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +27,7 @@ const Register = () => {
     //toast.success("Register success");
     try {
       const res = await axios.post("/api/v1/auth/register", {
+        nic,
         name,
         email,
         password,
@@ -36,7 +39,7 @@ const Register = () => {
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         navigate("/login");
-        toast.success("Register success");
+        message.success("Register success");
       } else {
         toast.error(res.data.message);
       }
@@ -67,13 +70,24 @@ const Register = () => {
           <div className="mb-3">
             <input
               type="text"
+              value={nic}
+              onChange={(e) => setNic(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="Enter Your NIC"
+              required
+              autoFocus
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
               placeholder="Enter Your Name"
               required
-              autoFocus
             />
           </div>
           <div className="mb-3">
