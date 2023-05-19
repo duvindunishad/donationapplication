@@ -7,18 +7,41 @@ import multer from "multer";
 // configure multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/images");
+    cb(null, ".public/images/humanphoto/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+});
+
+// check file type
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    return cb(new Error("Only .jpeg, .jpg and .png files are allowed!"));
+  }
+}
 
 export const registerController = async (req, res) => {
   try {
-    const { nic, name, email, password, phone, address, answer } = req.body;
+    const { nic, name, email, password, phone, address, answer, photo } =
+      req.body;
     // validation part
     if (!nic) {
       return res.send({ message: "Nic is required" });
@@ -41,6 +64,9 @@ export const registerController = async (req, res) => {
     if (!answer) {
       return res.send({ message: "Answer is required" });
     }
+    if (!photo) {
+      return res.send({ message: "Photo is required" });
+    }
 
     //check the existing NIC
     const existingUsers = await userModel.findOne({ nic });
@@ -59,6 +85,17 @@ export const registerController = async (req, res) => {
       });
     }
 
+    // post("/upload", upload.single("photo"), (req, res, next) => {
+    //   if (!req.file) {
+    //     res.status(400).json({ message: "No file uploaded." });
+    //     return;
+    //   }
+    //   res.status(200).json({
+    //     message: "File uploaded successfully.",
+    //     imageUrl: `images/${req.file.filename}`,
+    //   });
+    // });
+
     // save the image to MongoDB
     upload.single("photo")(req, res, async (err) => {
       if (err) {
@@ -69,7 +106,7 @@ export const registerController = async (req, res) => {
         });
       }
 
-      const photo = req.file ? req.file.filename : null;
+      // const photo = req.file ? req.file.filename : null;
 
       // register user
       const hashedPassword = await hashPassword(password);
@@ -83,7 +120,7 @@ export const registerController = async (req, res) => {
         address,
         password: hashedPassword,
         answer,
-        photo,
+        photo: req.file ? req.file.path : null,
       }).save();
 
       res.status(201).send({

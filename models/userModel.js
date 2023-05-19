@@ -34,9 +34,13 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     photo: {
+      type: String,
       data: Buffer,
-      contentType: String,
     },
+    // photo: {
+    //   data: Buffer,
+    //   contentType: String,
+    // },
     // role: {
     //   type: Number,
     //   default: 0,

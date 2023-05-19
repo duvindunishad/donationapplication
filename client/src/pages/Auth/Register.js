@@ -16,7 +16,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ const Register = () => {
     e.preventDefault();
     // console.log(name, email, password, address, phone);
     //toast.success("Register success");
+
     try {
       const res = await axios.post("/api/v1/auth/register", {
         nic,
@@ -145,7 +146,7 @@ const Register = () => {
               required
             />
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             {photo ? photo.name : "Upload Your Face Photo Below"}
             <input
               type="file"
@@ -157,6 +158,18 @@ const Register = () => {
               placeholder="Upload your face original photo"
               // onChange={imageUpload}
               // onChange={handlePhoto}
+            />
+          </div> */}
+          <div className="mb-3">
+            {photo ? photo.name : "Upload Your Face Photo Below"}
+            <input
+              type="file"
+              name="photo"
+              accept="image/*"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              className="form-control mt-3"
+              id="exampleInputEmail1"
+              placeholder="Upload your face original photo"
             />
           </div>
           <div className="mb-3">

@@ -48,21 +48,37 @@ export const deleteUserController = async (req, res) => {
 };
 
 //manage user's role
-export const updateUserRoleController = async (req, res) => {
-  try {
-    const { id } = req.params; // get the user ID from the request parameters
-    const { role } = req.body; // get the new role from the request body
+// export const updateUserRoleController = async (req, res) => {
+//   try {
+//     const { id } = req.params; // get the user ID from the request parameters
+//     const { role } = req.body; // get the new role from the request body
 
-    User.findByIdAndUpdate(id, { role }, { new: true }, (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "Internal server error" });
-      } else {
-        res.json(updatedUser);
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Something went wrong" });
+//     User.findByIdAndUpdate(id, { role }, { new: true }, (err, updatedUser) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ error: "Internal server error" });
+//       } else {
+//         res.json(updatedUser);
+//       }
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Something went wrong" });
+//   }
+// };
+export const updateUserRoleController = async (req, res, next, id) => {
+  try {
+    await userModel.findByIdAndUpdate(id);
+    // const users = await users.findByIdAndUpdate(req.params.role);
+    if (!users) {
+      res.status(404).send({ message: "User not found" });
+    } else {
+      users.role = req.body.role;
+      const updatedUser = await users.save();
+      res.status(200).send(updatedUser);
+      message.success("user role updated successfully");
+    }
+  } catch (err) {
+    next(err);
   }
 };

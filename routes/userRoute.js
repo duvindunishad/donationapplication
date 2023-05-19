@@ -22,10 +22,12 @@ router.delete(
 
 // update user role
 router.put(
-  "/update-role/:id/role",
-  isAdmin,
+  "/update-role/:id",
+
   requireSignIn,
   updateUserRoleController
+  // "/update-role/:id/role",
+  // isAdmin,
 );
 
 export default router;

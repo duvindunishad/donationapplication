@@ -6,6 +6,7 @@ import axios from "axios";
 import { Form, Select, Button, message } from "antd";
 import { Modal } from "antd";
 import RoleForm from "../../components/Form/RoleForm";
+import { useParams } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -29,6 +30,8 @@ const Users = () => {
   const [loading, setLoading] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedRole, setSelectedRole] = useState(null);
+
+  const params = useParams();
 
   const handleUserChange = (value) => {
     setSelectedUser(value);
@@ -67,26 +70,26 @@ const Users = () => {
   };
 
   //update user role
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.put(
-        `/api/v1/user/update-role/${selected._id}`,
-        { role: updatedRole } // send updated role in request body
-      );
-      if (data?.success) {
-        message.success(`${selected.role}'s role updated to ${updatedRole}`);
-        setSelected(null);
-        setUpdatedRole("");
-        setVisible(false);
-        getAllUsers();
-      } else {
-        message.error(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const { data } = await axios.put(
+  //       `/api/v1/user/update-role/${selected._id}`,
+  //       { role: updatedRole } // send updated role in request body
+  //     );
+  //     if (data?.success) {
+  //       message.success(`${selected.role}'s role updated to ${updatedRole}`);
+  //       setSelected(null);
+  //       setUpdatedRole("");
+  //       setVisible(false);
+  //       getAllUsers();
+  //     } else {
+  //       message.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -99,7 +102,34 @@ const Users = () => {
   //     console.error(err);
   //   }
   // };
-
+  //------------------------------------------
+  const handleUpdate = async (id) => {
+    // debugger;
+    // e.preventDefault();
+    try {
+      //getId(users.data.id);
+      const { data } = await axios.put(
+        `/api/v1/user/update-role/${id}`,
+        {
+          role: newRole,
+        },
+        setNewRole(users.role)
+      );
+      if (data.success) {
+        message.success(`role updated to ${newRole}`);
+        setSelected(null);
+        setUpdatedRole("");
+        setVisible(false);
+        getAllUsers();
+      } else {
+        message.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Something went wrong");
+    }
+  };
+  //--------------------------------
   return (
     <Layout title={"Dashboard - Users"}>
       <div className="container-flu users_id m-3 p-3">
@@ -110,7 +140,7 @@ const Users = () => {
           <div className="col-md-9">
             <h1 className="text-center">Users</h1>
             <div className="row">
-              {users.map((users, role) => (
+              {users.map((users) => (
                 <div className="col-md-4 mb-4" key={users._id}>
                   <div className="card">
                     <div className="card-body">
@@ -127,44 +157,44 @@ const Users = () => {
                         >
                           Delete User
                         </button>
-                        <div className="col-md-4 mb-4" key={id}>
+                        <div className="col-md-4 mb-4" key={users._id}>
                           <Form>
                             <Form.Item
                               className="role p-1 m-1 mt-3"
-                              name="role"
+                              // name="role"
+                              value=""
                               rules={[
                                 {
                                   required: true,
                                   message: "Please select a new role",
                                 },
                               ]}
+                              onChange={(value) => setRole(value)} // <- Set the newRole variable based on the selected value
                             >
-                              <Select placeholder="Select a new role">
+                              <Select
+                                placeholder="Select a new role"
+                                //onChange={(value) => setNewRole(value)}
+                              >
+                                {/* <option value="">Select a new role</option> */}
                                 <Option value="users">User</Option>
                                 <Option value="admin">Admin</Option>
-                                <Option value="donationreceiver">
+                                <Option value="donationReceiver">
                                   Donation Receiver
                                 </Option>
                               </Select>
                             </Form.Item>
 
-                            {/* <RoleForm
-                              value={updatedRole}
-                              setValue={setUpdatedRole}
-                              handleSubmit={handleSubmit}
-                            /> */}
                             <Button
-                              type="primary"
-                              loading={loading}
+                              className="btn-primary text-center"
+                              // onClick={handleUpdate}
                               onClick={() => {
-                                handleSubmit(id);
+                                handleUpdate(role);
                               }}
                             >
                               Update Role
                             </Button>
                           </Form>
                         </div>
-
                         {/* <div className="col-md-4 mb-4" key={users._id}>
                           <select
                             className="role p-1 m-1 mt-3"

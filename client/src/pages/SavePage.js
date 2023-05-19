@@ -148,9 +148,15 @@ const SavePage = () => {
                     />
                   </div>
                   <div className="col-md-4">
-                    <p>{p.name}</p>
-                    <p>{p.description.substring(0, 30)}</p>
-                    <p>ExpireDate : {p.expireDate}</p>
+                    <p>
+                      <b>Product Name : </b> {p.name}
+                    </p>
+                    <p>
+                      <b>Description : </b> {p.description.substring(0, 30)}
+                    </p>
+                    <p>
+                      <b>ExpireDate : </b> {p.expireDate}
+                    </p>
                     {/* </div> */}
                     <div className="col-md-4 save-remove-btn">
                       <button
@@ -232,7 +238,7 @@ const SavePage = () => {
                     />
                     {/* here i create to only enable the request button when requester is an donation requester */}
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary mb-3"
                       onClick={handleRequest}
                       enable={
                         loading ||

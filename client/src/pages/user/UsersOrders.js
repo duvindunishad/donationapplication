@@ -52,7 +52,7 @@ const UsersOrders = () => {
           </div>
           <div className="col-md-9">
             <h1 className="text-center">All Orders</h1>
-            {orders?.map((o, i) => {
+            {orders?.map((order, index) => {
               return (
                 <div className="border shadow">
                   <table className="table">
@@ -68,12 +68,12 @@ const UsersOrders = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>{i + 1}</td>
+                        <td>{index + 1}</td>
                         <td>
                           <Select
                             bordered={false}
-                            onChange={(value) => handleChange(o._id, value)}
-                            defaultValue={o?.status}
+                            onChange={(value) => handleChange(order._id, value)}
+                            defaultValue={order?.status}
                           >
                             {status.map((s, i) => (
                               <Option key={i} value={s}>
@@ -82,16 +82,15 @@ const UsersOrders = () => {
                             ))}
                           </Select>
                         </td>
-                        <td>{o?.buyer?.name}</td>
-                        <td>{moment(o?.createAt).fromNow()}</td>
-                        {/* <td>{o?.payment.success ? "Success" : "Failed"}</td> */}
-                        <td>{o?.buyer?.address}</td>
-                        <td>{o?.products?.length}</td>
+                        <td>{order?.buyer?.name}</td>
+                        <td>{moment(order?.createAt).fromNow()}</td>
+                        <td>{order?.buyer?.address}</td>
+                        <td>{order?.products?.length}</td>
                       </tr>
                     </tbody>
                   </table>
                   <div className="container">
-                    {o?.products?.map((p, i, o) => (
+                    {order?.products?.map((p, i, o) => (
                       <div className="row mb-2 p-3 card flex-row" key={p._id}>
                         <div className="col-md-4">
                           <img
