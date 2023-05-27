@@ -51,7 +51,7 @@ const SavePage = () => {
       setRequesting(true);
 
       // make donation request here
-      const items = save.map((item) => ({ id: item._id, name: item.name }));
+      const items = save.map((item) => ({ id: item._id, name: item.name, address: item.address }));
       localStorage.removeItem("Save");
       setSave([]);
 

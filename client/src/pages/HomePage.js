@@ -153,7 +153,7 @@ const HomePage = () => {
   }, [images.length]);
 
   return (
-    <Layout title={"donate"}>
+    <Layout title={"DONATION APPLICATION"}>
       <div className="slide-container mt-2">
         <div className="slide-image-container">
           <img

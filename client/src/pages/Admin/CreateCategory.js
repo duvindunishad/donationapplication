@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import CategoryForm from "../../components/Form/CategoryForm";
 //import CategoryForm from "../../components/Form/CategoryForm";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -22,7 +22,7 @@ const CreateCategory = () => {
         name,
       });
       if (data?.success) {
-        toast.success(`${name} is created`);
+        message.success(`${name} is created`);
         getAllCategory();
       } else {
         toast.error(data.message);
@@ -58,7 +58,7 @@ const CreateCategory = () => {
         { name: updatedName }
       );
       if (data?.success) {
-        toast.success(`${updatedName} is updated`);
+        message.success(`${updatedName} is updated`);
         setSelected(null);
         setUpdatedName("");
         setVisible(false);
@@ -78,7 +78,7 @@ const CreateCategory = () => {
         `/api/v1/category/delete-category/${pId}`
       );
       if (data.success) {
-        toast.success(`Category is deleted`);
+        message.success(`Category is deleted`);
 
         getAllCategory();
       } else {

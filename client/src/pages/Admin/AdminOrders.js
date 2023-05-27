@@ -85,7 +85,7 @@ const AdminOrders = () => {
                           <td>{o?.buyer?.name}</td>
                           <td>{moment(o?.createAt).fromNow()}</td>
                           <td>{o?.products?.length}</td>
-                          <td>{o?.buyer?._id.address}</td>
+                          <td>{o?.buyer?.address}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -111,6 +111,7 @@ const AdminOrders = () => {
                             </p>
                             <p>
                               <b>ExpireDate : </b> {p.expireDate}
+                             
                             </p>
                           </div>
                         </div>

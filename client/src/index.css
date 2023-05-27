@@ -18,10 +18,12 @@
   box-shadow: 0 8px 6px -6px #87CEFA	;
   --webkit-box-shadow: 0 8px 6px -6px #87CEFA	;
   border-bottom: solid #87CEFA	 !important;
+  
 }
 
 .nav-link {
   font-weight: 300 !important;
+  
 }
 
 .active {
@@ -32,6 +34,8 @@
   font-weight: 700;
   font-family: "roboto", sans-serif;
   letter-spacing: 3px;
+  color: #000000;
+  /* change dolour of donation site name and logo */
 }
 
 .search-form {

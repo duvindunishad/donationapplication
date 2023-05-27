@@ -9,9 +9,18 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     payment: {},
-    buyer: {
+    buyer: 
+    {
       type: mongoose.ObjectId,
       ref: "users",
+      // address: ref.address,
+    },
+    address: 
+    {
+      type: mongoose.ObjectId,
+      //ref: "users",
+       ref: "users",
+       
     },
     status: {
       type: String,

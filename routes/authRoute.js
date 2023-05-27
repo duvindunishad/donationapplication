@@ -6,9 +6,11 @@ import {
   forgotPasswordController,
   updateProfileController,
   getOrdersController,
+ 
   getAllOrdersControl,
   getAllOrdersController,
   orderStatusController,
+  updateRoleController,
 } from "../controllers/authController.js";
 import {
   isAdmin,
@@ -76,6 +78,14 @@ router.put(
   requireSignIn,
 
   orderStatusController
+);
+
+//role
+router.put(
+  "/update-role/:id",
+  requireSignIn,
+  updateProfileController,
+  updateRoleController
 );
 
 export default router;

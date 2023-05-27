@@ -434,6 +434,7 @@ export const brainTreePaymentController = async (req, res) => {
             products: save,
 
             buyer: req.user._id,
+            
           }).save();
           res.json({ ok: true });
         } else {

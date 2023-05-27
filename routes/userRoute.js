@@ -5,9 +5,13 @@ const router = express.Router();
 import {
   deleteUserController,
   getAllUsersController,
-  updateUserRoleController,
+  updateUserRole,
 } from "../controllers/userController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddlewares.js";
+import {
+  updateProfileController,
+  updateRoleController,
+} from "../controllers/authController.js";
 
 // Route for getting all users
 router.get("/all-users", getAllUsersController);
@@ -23,10 +27,14 @@ router.delete(
 // update user role
 router.put(
   "/update-role/:id",
-
+  //"/update-role/:id/role",
   requireSignIn,
-  updateUserRoleController
-  // "/update-role/:id/role",
+  updateRoleController,
+  updateProfileController
+  // updateUserRole
+
+  // isAdmin,
+  // isUser
   // isAdmin,
 );
 

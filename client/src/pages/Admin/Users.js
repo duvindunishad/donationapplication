@@ -7,6 +7,8 @@ import { Form, Select, Button, message } from "antd";
 import { Modal } from "antd";
 import RoleForm from "../../components/Form/RoleForm";
 import { useParams } from "react-router-dom";
+import UpdateRole from "./UpdateRole";
+import AllUsers from "./AllUsers";
 
 const { Option } = Select;
 
@@ -103,33 +105,46 @@ const Users = () => {
   //   }
   // };
   //------------------------------------------
+  // const handleRoleUpdate = async (userId, value, id) => {
+  //   try {
+  //     const { data } = await axios.put(`/api/v1/auth/update-role/${userId}`, {
+  //       role: value,
+  //     });
+  //     if (data.success) {
+  //       message.success("Role updated successfully");
+  //       // Perform any additional actions after role update if needed
+  //     } else {
+  //       message.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     message.error("Failed to update role");
+  //   }
+  // };
+
   const handleUpdate = async (id) => {
-    // debugger;
+    //debugger;
     // e.preventDefault();
     try {
-      //getId(users.data.id);
-      const { data } = await axios.put(
-        `/api/v1/user/update-role/${id}`,
-        {
-          role: newRole,
-        },
-        setNewRole(users.role)
-      );
+      // getId(users.data.userId);
+      const { data } = await axios.put(`/api/v1/user/update-role/${id}`, {
+        role: newRole,
+      });
+
       if (data.success) {
-        message.success(`role updated to ${newRole}`);
-        setSelected(null);
-        setUpdatedRole("");
-        setVisible(false);
+        message.success(`User roles updated to ${newRole}`);
+        setNewRole("");
         getAllUsers();
       } else {
         message.error(data.message);
       }
     } catch (error) {
-      console.log(error);
-      message.error("Something went wrong");
+      console.error(error);
+      message.error("Failed to update user roles");
     }
   };
   //--------------------------------
+
   return (
     <Layout title={"Dashboard - Users"}>
       <div className="container-flu users_id m-3 p-3">
@@ -158,66 +173,67 @@ const Users = () => {
                           Delete User
                         </button>
                         <div className="col-md-4 mb-4" key={users._id}>
-                          <Form>
-                            <Form.Item
-                              className="role p-1 m-1 mt-3"
-                              // name="role"
-                              value=""
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Please select a new role",
-                                },
-                              ]}
-                              onChange={(value) => setRole(value)} // <- Set the newRole variable based on the selected value
-                            >
-                              <Select
-                                placeholder="Select a new role"
-                                //onChange={(value) => setNewRole(value)}
-                              >
-                                {/* <option value="">Select a new role</option> */}
-                                <Option value="users">User</Option>
-                                <Option value="admin">Admin</Option>
-                                <Option value="donationReceiver">
-                                  Donation Receiver
-                                </Option>
-                              </Select>
-                            </Form.Item>
-
-                            <Button
-                              className="btn-primary text-center"
-                              // onClick={handleUpdate}
-                              onClick={() => {
-                                handleUpdate(role);
-                              }}
-                            >
-                              Update Role
-                            </Button>
-                          </Form>
+                          {/* <table className="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">User</th>
+                                <th scope="col"> Address</th>
+                                <th scope="col">User Role</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{users?.name}</td>
+                                <td>{users?._id.address}</td>
+                                <td>
+                                  <Select
+                                    value={newRole}
+                                    onChange={setNewRole}
+                                    placeholder="Select a new role"
+                                    style={{ width: 200, marginBottom: 16 }}
+                                  >
+                                    <Option value="users">Users</Option>
+                                    <Option value="admin">Admin</Option>
+                                    <Option value="donationReceiver">
+                                      Donation Receiver
+                                    </Option>
+                                  </Select>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table> */}
+                          {/* <UpdateRole></UpdateRole> */}
+                          {/* <AllUsers></AllUsers> */}
                         </div>
-                        {/* <div className="col-md-4 mb-4" key={users._id}>
-                          <select
-                            className="role p-1 m-1 mt-3"
-                            value={role}
-                            onChange={(event) => setRole(event.target.value)}
-                            required
-                          >
-                            <option value="">Select a new role</option>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="donationReceiver">
-                              Donation Receiver
-                            </option>
-                          </select>
 
+                        <div className="col-md-4 mb-4" key={users._id}>
+                          <Select
+                            // value={newRole}
+                            onChange={setNewRole}
+                            placeholder="Select a new role"
+                            style={{ width: 200, marginBottom: 16 }}
+                          >
+                            <Option value="users">Users</Option>
+                            <Option value="admin">Admin</Option>
+                            <Option value="donationReceiver">
+                              Donation Receiver
+                            </Option>
+                          </Select>
+                          <br />
                           <button
                             className="btn btn-primary"
-                            disabled={!role}
-                            onClick={() => onFinish(users._id)}
+                            //disabled={!role}
+                            onClick={() => handleUpdate(users._id)}
                           >
                             Update Role
                           </button>
-                        </div> */}
+                          {/* <button
+                            className="btn btn-primary"
+                            onClick={() => handleUpdate(users._id.setNewRole())}
+                          >
+                            Update Role
+                          </button> */}
+                        </div>
                       </div>
                     </div>
                   </div>

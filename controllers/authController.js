@@ -242,6 +242,49 @@ export const testController = (req, res) => {
 };
 
 //update profile
+// export const updateProfileController = async (req, res) => {
+//   try {
+//     const { name, email, password, address, phone, role } = req.body;
+//     const user = await userModel.findById(req.user._id);
+
+//     // Password
+//     if (password && password.length < 6) {
+//       return res.json({
+//         error: "Password is required and should be at least 6 characters long",
+//       });
+//     }
+//     const hashedPassword = password ? await hashPassword(password) : undefined;
+
+//     // Update user fields
+//     const updatedUserFields = {
+//       name: name || user.name,
+//       password: hashedPassword || user.password,
+//       phone: phone || user.phone,
+//       address: address || user.address,
+//       role: role || user.role, // Add role update
+//     };
+
+//     const updatedUser = await userModel.findByIdAndUpdate(
+//       req.user._id,
+//       updatedUserFields,
+//       { new: true }
+//     );
+
+//     res.status(200).send({
+//       success: true,
+//       message: "Profile Updated Successfully",
+//       updatedUser,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send({
+//       success: false,
+//       message: "Error While Updating Profile",
+//       error,
+//     });
+//   }
+// };
+
 export const updateProfileController = async (req, res) => {
   try {
     const { name, email, password, address, phone } = req.body;
@@ -258,6 +301,7 @@ export const updateProfileController = async (req, res) => {
         password: hashedPassword || user.password,
         phone: phone || user.phone,
         address: address || user.address,
+        // role: role || user.role, // Add role update
       },
       { new: true }
     );
@@ -271,6 +315,64 @@ export const updateProfileController = async (req, res) => {
     res.status(400).send({
       success: false,
       message: "Error WHile Update profile",
+      error,
+    });
+  }
+};
+
+// export const updateRoleController = async (req, res) => {
+//   try {
+//     //const { id } = req.params;
+//     //const user = await userModel.findById(req.user.role);
+//     userModel.findByIdAndUpdate(
+//       // req.user.role,
+//       // {
+//       //   role: newRole || user.role, // Add role update
+//       // },
+//       // { new: true }
+//       req.params.id,
+//       {
+//         role: "admin",
+//       }
+//     );
+//     res.status(200).send({
+//       success: true,
+//       message: "Role Updated SUccessfully",
+//       users,
+//     });
+//   } catch (error) {
+//     console.log(error, 'error');
+//     res.status(400).send({
+//       success: false,
+//       message: "Error WHile Update Role",
+//       error,
+//     });
+//   }
+// };
+
+//update role
+export const updateRoleController = async (req, res) => {
+  try {
+    // console.log("jsdjakf");
+    const { newRole } = req.body;
+    //const user = await userModel.findById(req.user.role);
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body // Add role update
+      },
+      { new: true }
+    );
+    res.status(200).send({
+      success: true,
+      message: "Role Updated SUccessfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error WHile Update Role",
       error,
     });
   }

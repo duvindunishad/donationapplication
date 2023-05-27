@@ -36,6 +36,7 @@ import DonationReciverRoute from "./components/layout/Routes/DonationReciverRout
 import DonationReciverDashboard from "./pages/donationreciver/DonationReciverDashboard";
 import DonaOrders from "./pages/donationreciver/DonaOrders";
 import DonaProfile from "./pages/donationreciver/DonaProfile";
+import AllUsers from "./pages/Admin/AllUsers";
 
 function App() {
   return (
@@ -96,6 +97,8 @@ function App() {
           <Route path="admin/product/:slug" element={<UpdateProduct />} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users></Users>} />
+
+          <Route path="admin/alluser" element={<AllUsers></AllUsers>} />
 
           <Route path="admin/orders" element={<AdminOrders />} />
         </Route>
