@@ -84,7 +84,7 @@ const UsersOrders = () => {
                         </td>
                         <td>{order?.buyer?.name}</td>
                         <td>{moment(order?.createAt).fromNow()}</td>
-                        <td>{order?.buyer?.address}</td>
+                        <td>{auth?.user?.address}</td>
                         <td>{order?.products?.length}</td>
                       </tr>
                     </tbody>
@@ -102,10 +102,10 @@ const UsersOrders = () => {
                           />
                         </div>
                         <div className="col-md-8">
-                          <p>{p.name}</p>
-                          <p>{p.description.substring(0, 30)}</p>
+                          <p><b>Name : </b>{p.name}</p>
+                          <p><b>Description : </b>{p.description.substring(0, 30)}</p>
                           {/* <p>Address: {o?.user?.address}</p> */}
-                          <p>Expire Date : {p.expireDate}</p>
+                          <p><b>Expire Date : </b>{p.expireDate}</p>
                         </div>
                       </div>
                     ))}

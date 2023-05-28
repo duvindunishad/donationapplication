@@ -89,8 +89,8 @@ const Orders = () => {
                           />
                         </div>
                         <div className="col-md-8">
-                          <p>{p.name}</p>
-                          <p>{p.description.substring(0, 30)}</p>
+                          <p>Name: {p.name}</p>
+                          <p>Description: {p.description.substring(0, 30)}</p>
                           <p>ExpireDate : {p.expireDate}</p>
                         </div>
                       </div>
